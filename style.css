@@ -197,30 +197,44 @@ h2 {
 }
 
 /* About Section */
+.about {
+  padding: 60px 0;
+  background-color: #f4f4f4;
+}
+
 .about-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .about-half {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    margin: 10px;
-    text-align: center;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 20px;
+}
+
+.about-half:first-child {
+  margin-bottom: 40px; /* Aggiungi margine inferiore alla prima metà */
 }
 
 .about-half img {
-    max-width: 100px; /* Dimensioni ridotte per le immagini */
-    height: auto;
-    border-radius: 50%;
-    margin-bottom: 20px; /* Spazio tra immagine e testo */
+  width: 150px; /* Imposta una larghezza fissa per le immagini */
+  height: 150px; /* Imposta un'altezza fissa per le immagini */
+  object-fit: cover; /* Assicura che l'immagine riempia l'area senza distorsioni */
+  border-radius: 50%;
 }
 
-.about-half p {
-    margin: 0;
+.about-text {
+  flex: 1;
+  margin: 0 40px; /* Aggiungi margine laterale */
+}
+
+.about-text p {
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.6;
 }
 
 /* Portfolio Section */
@@ -325,7 +339,7 @@ h2 {
   line-height: 1.6;
 }
 
-.social-links {
+social-links {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -424,10 +438,25 @@ footer .social-links a:hover {
   /* About Section */
   .about-content {
     flex-direction: column;
+    align-items: center;
   }
 
   .about-half {
-    margin-bottom: 2rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-half img {
+    margin-bottom: 20px;
+  }
+
+  .about-text {
+    text-align: center;
+    margin: 0; /* Rimuovi margine laterale per dispositivi mobili */
+  }
+
+  .about-half:first-child {
+    margin-bottom: 20px; /* Riduci il margine inferiore per dispositivi mobili */
   }
 
   /* Portfolio Section */
