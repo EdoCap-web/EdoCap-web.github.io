@@ -13,12 +13,21 @@
   <nav>
     <div class="container">
       <a class="logo">LE Web Developers</a>
+      <div class="menu-icon" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </div>
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">Chi Sono</a></li>
         <li><a href="#portfolio">Portfolio</a></li>
         <li><a href="#services">Servizi</a></li>
-        <li><a href="#contact">Contatti</a></li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Contatti</a>
+          <div class="dropdown-content">
+            <a href="https://wa.me/3662883732" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://www.instagram.com/lucacapuccinii?igsh=cXJtdWY0YmZ4Mm9u" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+          </div>
+        </li>
       </ul>
     </div>
   </nav>
@@ -41,12 +50,22 @@
     <div class="container">
       <h2>Chi Sono</h2>
       <div class="about-content">
-        <img src="profile.jpg" alt="Il Tuo Nome">
-        <p>
-          Sono un web developer appassionato di creare soluzioni digitali moderne e funzionali.
-          Specializzato in frontend e backend, amo trasformare idee in realtà attraverso codice pulito
-          e design accattivante. Ho esperienza con HTML, CSS, JavaScript, React, Node.js e molto altro.
-        </p>
+        <div class="about-half">
+          <img src="./Cappu.jpeg" alt="Luca">
+          <p>
+            Sono Luca, un web developer appassionato di creare soluzioni digitali moderne e funzionali.
+            Specializzato in frontend e backend, amo trasformare idee in realtà attraverso codice pulito
+            e design accattivante. Ho esperienza con HTML, CSS, JavaScript, React, Node.js e molto altro.
+          </p>
+        </div>
+        <div class="about-half">
+          <img src="./Cappu.jpeg" alt="Edoardo">
+          <p>
+            Sono Edoardo, un web developer appassionato di creare soluzioni digitali moderne e funzionali.
+            Specializzato in frontend e backend, amo trasformare idee in realtà attraverso codice pulito
+            e design accattivante. Ho esperienza con HTML, CSS, JavaScript, React, Node.js e molto altro.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -83,47 +102,33 @@
         <div class="service">
           <i class="fas fa-code"></i>
           <h3>Sviluppo Frontend</h3>
-          <p>Creazione di interfacce utente moderne e responsive.</p>
+          <img src="./frontend.png" class="img1" alt="frontend">
+          <p>Realizzazione di interfacce utente moderne e responsive, garantendo un'esperienza utente ottimale su tutti i dispositivi.</p>
         </div>
         <div class="service">
           <i class="fas fa-server"></i>
           <h3>Sviluppo Backend</h3>
-          <p>Costruzione di API robuste e scalabili.</p>
+          <img src="./backend.png" alt="backend">
+          <p>Progettazione e implementazione di API robuste e scalabili, assicurando prestazioni elevate e sicurezza dei dati.</p>
         </div>
         <div class="service">
           <i class="fas fa-paint-brush"></i>
           <h3>Design UI/UX</h3>
-          <p>Progettazione di esperienze utente intuitive e accattivanti.</p>
+          <img src="./UI.png" alt="UIUX">
+          <p>Creazione di esperienze utente intuitive e accattivanti, con un focus su usabilità e design visivamente piacevole.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Sezione Contatti -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2>Contatti</h2>
-      <form action="#" method="post">
-        <input type="text" name="name" placeholder="Nome" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" placeholder="Messaggio" required></textarea>
-        <button type="submit" class="btn">Invia Messaggio</button>
-      </form>
-    </div>
-  </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2023 Il Tuo Nome. Tutti i diritti riservati.</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-  </footer>
 </body>
+<script>
+  function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+  }
+</script>
 </html>
 
 
