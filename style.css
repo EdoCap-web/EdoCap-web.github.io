@@ -44,7 +44,7 @@ nav .container {
 nav .logo {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #fff;
+  color: #ffffff;
   margin-right: auto;
 }
 
@@ -395,6 +395,136 @@ footer .social-links a:hover {
     color: #ffcc00;
 }
 
+.container_about{
+  padding-left: 50px;
+}
+
+/* Appointment Section */
+.appointment {
+  padding: 60px 0;
+  background-color: #4d4d4d;
+  text-align: center;
+}
+
+.appointment .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.appointment h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.appointment p {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 40px;
+}
+
+.appointment-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.appointment-info, .appointment-links {
+  flex: 1;
+  min-width: 300px;
+}
+
+.appointment-info h3, .appointment-links h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.appointment-info ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.appointment-info ul li {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.appointment-info ul li::before {
+  content: "•";
+  color: #ffdd57;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.appointment-links .btn {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #10d62a;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-links .btn:hover {
+  background-color: #adadad;
+  color: black;
+}
+
+.appointment-links .btn i {
+  margin-right: 10px;
+}
+
+.appointment-links .btn2 {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #d6108a;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-links .btn2:hover {
+  background-color: #adadad;
+  color: black;
+}
+
+.appointment-links .btn2 i {
+  margin-right: 10px;
+}
+
+/* Footer */
+footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem 0;
+  font-size: 1rem;
+}
+
+footer a {
+  color: #ffdd57;
+  text-decoration: none;
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #ffcc00;
+}
+
 /* Media Queries per dispositivi iPhone */
 @media only screen and (max-width: 767px) {
   nav .container {
@@ -435,12 +565,6 @@ footer .social-links a:hover {
     font-size: 1rem;
   }
 
-  /* About Section */
-  .about-content {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .about-half {
     flex-direction: column;
     text-align: center;
@@ -478,3 +602,6 @@ footer .social-links a:hover {
     margin: 0 0 2rem 0;
   }
 }
+
+
+
