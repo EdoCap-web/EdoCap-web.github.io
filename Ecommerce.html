@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Come creo eCommerce | Metodo e Processo</title>
+  <meta name="description" content="Metodo professionale per eCommerce performanti: strategia, UX/UI, sviluppo, performance, SEO, sicurezza, deploy e crescita." />
+  <style>
+    :root{
+      --c-light:#ECF0F1;
+      --c-dark:#2C3E50;
+      --radius:14px;
+      --radius-sm:10px;
+      --shadow:0 10px 30px rgba(44,62,80,.15);
+      --shadow-sm:0 6px 18px rgba(44,62,80,.12);
+      --maxw:1150px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      color:var(--c-dark);
+      background:var(--c-light);
+      line-height:1.6;
+    }
+    a{color:var(--c-dark); text-underline-offset:3px}
+    .container{width:clamp(92%, 85vw, var(--maxw)); margin-inline:auto}
+    .btn{
+      display:inline-block; padding:.85rem 1.2rem; border-radius:999px;
+      background:var(--c-dark); color:var(--c-light); border:2px solid var(--c-dark);
+      font-weight:700; letter-spacing:.3px; transition:.25s ease; text-align:center
+    }
+    .btn:hover{background:transparent; color:var(--c-dark)}
+    .btn-light{background:#fff; color:var(--c-dark); border:2px solid #fff}
+    .btn-light:hover{background:transparent; border-color:var(--c-dark)}
+    .chip{
+      display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .7rem;
+      border:1.5px solid var(--c-dark); border-radius:999px; font-size:.85rem;
+      background:rgba(44,62,80,.06)
+    }
+
+    /* Header */
+    .skip{position:absolute; left:-9999px; top:auto}
+    .skip:focus{left:1rem; top:1rem; background:#fff; padding:.5rem .75rem; border-radius:6px; z-index:999}
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.2) blur(6px);
+      background:rgba(236,240,241,.8); border-bottom:1px solid rgba(44,62,80,.15)
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:.9rem 0}
+    .brand{display:flex; align-items:center; gap:.7rem; font-weight:800; letter-spacing:.4px}
+    .brand .logo{width:34px; height:34px; border-radius:10px; background:var(--c-dark); box-shadow:inset 0 0 0 4px var(--c-light)}
+    .nav a{font-weight:600; opacity:.9}
+    .nav .links{display:flex; gap:1rem}
+
+    /* Hero */
+    .hero{
+      position:relative; overflow:hidden; border-radius:calc(var(--radius) + 6px);
+      margin:18px auto 26px; background:
+        radial-gradient(1200px 500px at 85% -50%, rgba(44,62,80,.35), transparent 55%),
+        radial-gradient(1200px 500px at -10% 120%, rgba(44,62,80,.25), transparent 60%),
+        var(--c-dark);
+      color:var(--c-light);
+    }
+    .hero-inner{padding:70px min(6vw,48px)}
+    .hero h1{font-size:clamp(2rem, 3.2vw + 1rem, 3.2rem); line-height:1.15; margin:.1rem 0 .6rem}
+    .hero p{max-width:760px; opacity:.95; font-size:clamp(1rem, .3vw + .9rem, 1.1rem)}
+    .hero-cta{margin-top:1.2rem; display:flex; gap:.8rem; flex-wrap:wrap}
+    .hero .meta{margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap}
+
+    /* Layout */
+    main{padding:10px 0 60px}
+    section{margin:26px 0; padding:28px; background:#fff; border-radius:var(--radius); box-shadow:var(--shadow)}
+    .section-title{margin:0 0 .6rem; font-size:clamp(1.35rem, .7vw + 1rem, 1.8rem)}
+    .muted{opacity:.8}
+
+    .grid{display:grid; gap:18px; grid-template-columns:repeat(12, 1fr)}
+    .col-8{grid-column:span 8}
+    .col-4{grid-column:span 4}
+    @media (max-width: 980px){
+      .col-8,.col-4{grid-column:1 / -1}
+      .hero-inner{padding:52px 22px}
+      section{padding:22px}
+    }
+
+    /* TOC */
+    .toc{
+      position:sticky; top:86px; border:1.5px solid rgba(44,62,80,.18);
+      background:var(--c-light); padding:16px; border-radius:var(--radius-sm); box-shadow:var(--shadow-sm)
+    }
+    .toc h3{margin:.2rem 0 .6rem; font-size:1rem}
+    .toc a{display:block; padding:.35rem .2rem; font-size:.95rem; opacity:.9}
+    .toc a.active{font-weight:700}
+    .toc .caption{margin:.5rem 0 .2rem; font-weight:800; font-size:.85rem; opacity:.9}
+
+    /* Cards & Lists */
+    .card{
+      padding:18px; border:1.5px solid rgba(44,62,80,.12); border-radius:var(--radius-sm);
+      background:linear-gradient(180deg,#fff, #f7f9fa); box-shadow:var(--shadow-sm)
+    }
+    .steps{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr))}
+    .steps .step-num{
+      width:28px; height:28px; border-radius:50%; display:inline-grid; place-items:center;
+      background:var(--c-dark); color:var(--c-light); font-size:.9rem; font-weight:800; margin-right:.5rem
+    }
+    .checklist{list-style:none; padding:0; margin:0}
+    .checklist li{display:flex; gap:.6rem; padding:.4rem 0}
+    .check{width:18px; height:18px; border-radius:4px; border:2px solid var(--c-dark); display:inline-block; background:rgba(44,62,80,.05)}
+
+    /* Trust bar */
+    .trust{display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); align-items:center; justify-items:center}
+    .trust img{max-height:36px; filter:grayscale(1) contrast(1.1); opacity:.7}
+
+    /* Features */
+    .features{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr))}
+    .feature-card .icon{width:36px; height:36px; border-radius:8px; background:var(--c-dark); color:var(--c-light); display:grid; place-items:center; font-weight:800; margin-bottom:.5rem}
+
+    /* Metrics */
+    .metrics{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); text-align:center}
+    .kpi .num{font-size:2rem; font-weight:900}
+    .kpi .lbl{opacity:.85}
+
+    /* Case studies */
+    .cases{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(260px,1fr))}
+    .case h3{margin:.2rem 0 .4rem}
+    .case p{margin:0}
+
+    /* Testimonials */
+    .testimonials{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(260px,1fr))}
+    .testimonial .who{display:flex; align-items:center; gap:.6rem; margin-top:.6rem}
+    .avatar{width:42px; height:42px; border-radius:50%; background:#dfe6e9}
+
+    /* CTA banner */
+    .cta-banner{
+      background:var(--c-dark); color:var(--c-light); display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between
+    }
+    .cta-banner h3{margin:.2rem 0}
+    .cta-banner .actions{display:flex; gap:10px; flex-wrap:wrap}
+
+    /* Lead form */
+    .lead{display:grid; gap:18px; grid-template-columns:1.2fr .8fr; align-items:start}
+    .lead form{display:grid; gap:10px}
+    .lead input, .lead select, .lead textarea{
+      padding:.7rem .9rem; border:1.5px solid rgba(44,62,80,.2); border-radius:10px; font:inherit; background:#fff
+    }
+    .lead textarea{min-height:120px; resize:vertical}
+    .policy{font-size:.85rem; opacity:.9}
+    @media (max-width: 900px){ .lead{grid-template-columns:1fr} }
+
+    /* FAQ (native <details>) */
+    details{border:1.5px solid rgba(44,62,80,.18); border-radius:10px; padding:12px 14px; background:#fff}
+    details+details{margin-top:10px}
+    summary{cursor:pointer; font-weight:700}
+    summary::-webkit-details-marker{display:none}
+
+    /* Footer */
+    footer{
+      margin:34px 0 0; padding:28px 0 44px; text-align:center;
+      color:rgba(44,62,80,.85); border-top:1px solid rgba(44,62,80,.18)
+    }
+
+    /* Back to top */
+    .to-top{
+      position:fixed; right:18px; bottom:18px; z-index:40; transform:translateY(120%);
+      transition:transform .25s ease; box-shadow:var(--shadow-sm)
+    }
+    .to-top.show{transform:translateY(0)}
+
+    /* Navbar responsive/accessibile */
+    .btn-sm{padding:.55rem .9rem}
+    .sr-only{
+      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0,0,0,0);white-space:nowrap;border:0
+    }
+    .menu-toggle{
+      display:none; border:1.5px solid rgba(44,62,80,.25); background:#fff; color:var(--c-dark);
+      border-radius:10px; padding:.45rem .6rem; cursor:pointer; line-height:1
+    }
+    .menu-toggle:focus-visible{outline:3px solid rgba(44,62,80,.35); outline-offset:2px}
+    .menu-toggle .burger{
+      display:inline-block; width:18px; height:2px; background:var(--c-dark);
+      position:relative; vertical-align:middle
+    }
+    .menu-toggle .burger::before,
+    .menu-toggle .burger::after{
+      content:""; position:absolute; left:0; width:18px; height:2px; background:var(--c-dark)
+    }
+    .menu-toggle .burger::before{top:-6px}
+    .menu-toggle .burger::after{top:6px}
+
+    @media (max-width: 860px){
+      .menu-toggle{display:block}
+      .nav{position:relative}
+      .nav .links{
+        position:absolute; top:100%; right:0; left:0;
+        background:var(--c-light); border-bottom:1px solid rgba(44,62,80,.15);
+        display:none; flex-direction:column; gap:0; padding:.5rem
+      }
+      .nav .links.open{display:flex}
+      .nav .links a{padding:.6rem 1rem}
+      .nav .links .btn{margin:.2rem 1rem}
+    }
+
+    /* iOS text scaling */
+    html{-webkit-text-size-adjust:100%}
+
+    /* Header safe-area (iPhone notch) */
+    header{padding-top:calc(.9rem + env(safe-area-inset-top))}
+
+    /* Hero: altezza corretta su iPhone */
+    .hero{min-height:100svh}
+
+    /* Bottoni: target touch */
+    .btn{min-height:44px; line-height:1.1; touch-action:manipulation}
+
+    /* Back to top: safe-area bottom */
+    .to-top{bottom:calc(18px + env(safe-area-inset-bottom))}
+
+    /* Contatti rapidi: layout più solido e responsivo */
+    .contact-quick.card{display:grid; gap:12px}
+    .contact-quick .info{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      border-top:1px solid rgba(44,62,80,.12); padding-top:10px;
+    }
+    .contact-quick .label{font-weight:700}
+    .contact-quick .actions{display:flex; gap:10px; flex-wrap:wrap}
+
+    @media (max-width:600px){
+      .contact-quick .info{flex-direction:column; align-items:flex-start}
+      .contact-quick .actions{flex-direction:column; align-items:stretch}
+      .contact-quick .actions .btn{width:100%}
+    }
+
+    /* Riduci animazioni se richiesto */
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto}
+      .to-top{transition:none}
+    }
+
+    /* Hero responsive: riduci altezza su mobile */
+    @media (max-width: 860px){
+      .hero{min-height:auto; padding-block:42px}
+      .hero-inner{padding:0 22px}
+    }
+    @media (max-width: 600px){
+      .hero{padding-block:34px; margin:12px auto 18px; border-radius:12px}
+      .hero h1{font-size:clamp(1.7rem, 5.5vw, 2.1rem)}
+      .hero p{font-size:clamp(.95rem, 3.5vw, 1.05rem)}
+      .hero-cta{gap:.6rem; justify-content:center}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#contenuto">Salta al contenuto</a>
+
+  <header>
+    <div class="container nav" role="navigation" aria-label="Navigazione principale">
+      <a class="brand" href="./index.html">
+        <span class="logo" aria-hidden="true"></span>
+        <span>Luca & Edo</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="site-links">
+        <span class="sr-only">Apri/chiudi menu</span>
+        <span class="burger" aria-hidden="true"></span>
+      </button>
+
+      <div id="site-links" class="links">
+        <a href="./index.html">Home</a>
+      </div>
+    </div>
+  </header>
+
+    <section class="hero container" aria-labelledby="title-hero">
+    <div class="hero-inner">
+        <h1 id="title-hero">eCommerce su misura per te!</h1>
+        <p>
+        Dal concept al lancio: realizziamo shop online rapidi, sicuri e pronti a scalare.
+        Design orientato alla conversione, SEO tecnica e performance al top con WordPress/WooCommerce.
+        </p>
+        <div class="hero-cta">
+        <a class="btn" href="#processo">Scopri il metodo</a>
+        <a class="btn-light btn" href="#contatti">Prenota una consulenza gratuita</a>
+        </div>
+        <div class="hero-cta" style="margin-top:.6rem">
+        <span class="chip">Tempi medi: 2–6 settimane</span>
+        <span class="chip">Supporto continuativo</span>
+        <span class="chip">Performance‑first</span>
+        </div>
+    </div>
+    </section>
+
+  <main id="contenuto" class="container">
+    <div class="grid">
+      <aside class="col-4">
+        <nav class="toc" aria-label="Indice">
+          <h3>Indice</h3>
+          <a href="#processo">Processo di Sviluppo Completo</a>
+          <div class="caption">Approfondimenti</div>
+          <a href="#perche-noi">Perché scegliere noi</a>
+          <a href="#recensioni">Testimonianze</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contatti">Contatti</a>
+        </nav>
+      </aside>
+
+      <div class="col-8">
+        <section id="processo" aria-labelledby="h-processo">
+          <h2 class="section-title" id="h-processo">1) Processo in 10 fasi</h2>
+          <div class="steps">
+            <div class="card" id="s1-analisi">
+              <div><span class="step-num">1</span><strong>Analisi Preliminare</strong></div>
+              <p class="muted">Obiettivi, target, benchmark, budget, roadmap e KPI iniziali condivisi.</p>
+            </div>
+            <div class="card" id="s2-piattaforma">
+              <div><span class="step-num">2</span><strong>Scelta della piattaforma</strong></div>
+              <p class="muted">Valutiamo WooCommerce/integrazioni in base a catalogo, flussi e scalabilità.</p>
+            </div>
+            <div class="card" id="s3-design">
+              <div><span class="step-num">3</span><strong>Progettazione grafica & UI</strong></div>
+              <p class="muted">Wireframe responsive, design system, componenti riutilizzabili e micro‑copy.</p>
+            </div>
+            <div class="card" id="s4-prodotti">
+              <div><span class="step-num">4</span><strong>Caricamento prodotti</strong></div>
+              <p class="muted">Schede complete con varianti, immagini ottimizzate e tassonomie pulite.</p>
+            </div>
+            <div class="card" id="s5-configurazione">
+              <div><span class="step-num">5</span><strong>Configurazioni</strong></div>
+              <p class="muted">Pagamenti, spedizioni, tasse, email transazionali e tracciamenti conformi.</p>
+            </div>
+            <div class="card" id="s6-test">
+              <div><span class="step-num">6</span><strong>Test completo</strong></div>
+              <p class="muted">QA cross‑device: performance, usabilità, checkout, funnel, error handling.</p>
+            </div>
+            <div class="card" id="s7-seo">
+              <div><span class="step-num">7</span><strong>SEO & marketing</strong></div>
+              <p class="muted">On‑page SEO, schema, analytics, integrazione campagne e pixel.</p>
+            </div>
+            <div class="card" id="s8-formazione">
+              <div><span class="step-num">8</span><strong>Formazione</strong></div>
+              <p class="muted">Training su ordini, catalogo, promozioni e buone pratiche editoriali.</p>
+            </div>
+            <div class="card" id="s9-lancio">
+              <div><span class="step-num">9</span><strong>Lancio</strong></div>
+              <p class="muted">Messa online, CDN, caching e monitoraggio delle prime conversioni.</p>
+            </div>
+            <div class="card" id="s10-assistenza">
+              <div><span class="step-num">10</span><strong>Assistenza</strong></div>
+              <p class="muted">Supporto, aggiornamenti e crescita continua orientata ai risultati.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="perche-noi" aria-labelledby="h-perche-noi">
+          <h2 class="section-title" id="h-perche-noi">Perché scegliere noi</h2>
+          <div class="features">
+            <div class="card feature-card">
+              <div class="icon">UX</div>
+              <h3>Orientati alla conversione</h3>
+              <p class="muted">Esperienze snelle e persuasive, con attenzione a micro‑interazioni e fiducia.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="icon">SPD</div>
+              <h3>Velocità e performance</h3>
+              <p class="muted">Ottimizzazioni tecniche e best practice Core Web Vitals.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="icon">SEO</div>
+              <h3>SEO‑ready</h3>
+              <p class="muted">Struttura pulita, meta curati e dati strutturati dove utili.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="icon">SUP</div>
+              <h3>Supporto continuo</h3>
+              <p class="muted">Affiancamento post‑lancio, report e roadmap evolutiva.</p>
+            </div>
+          </div>
+        </section>
+
+
+
+        <section id="recensioni" aria-labelledby="h-recensioni">
+          <h2 class="section-title" id="h-recensioni">Testimonianze</h2>
+          <div class="testimonials">
+            <div class="card testimonial">
+              <p>Team rapido e preciso. Il nuovo eCommerce è più veloce e vende di più.</p>
+              <div class="who">
+                <span class="avatar" aria-hidden="true"></span>
+                <div><strong>Alessia R.</strong><br><span class="muted">CMO, Fashion</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cta-banner" aria-labelledby="h-cta">
+          <div>
+            <h3 id="h-cta">Pronto a crescere con il tuo eCommerce?</h3>
+            <p class="muted" style="margin:0">Parliamo del progetto e definiamo una roadmap in 48h.</p>
+          </div>
+          <div class="actions">
+            <a href="#contatti" class="btn btn-light">Richiedi preventivo</a>
+            <a href="#faq" class="btn">Domande frequenti</a>
+          </div>
+        </section>
+
+        <section id="faq" aria-labelledby="h-faq">
+          <h2 class="section-title" id="h-faq">FAQ</h2>
+          <details>
+            <summary>Quanto dura un progetto?</summary>
+            <p>In media 2–6 settimane a seconda di complessità e dimensione del catalogo.</p>
+          </details>
+          <details>
+            <summary>Livello di sicurezza dell'ecommerce?</summary>
+            <p>Utilizzo di domini con protocollo SSL/TLS con crittografia simmetrica per garantire la massima sicurezza. Utilizzo di password forti ed imprevedibili per gestire l'admin panel di wordpress.</p>
+          </details>
+          <details>
+            <summary>È possibile integrare pagamenti reali?</summary>
+            <p>Sì, con gateway diffusi (es. Stripe/PayPal) e best practice di sicurezza.</p>
+          </details>
+        </section>
+
+       <!-- Contatti rapidi -->
+        <section class="contact-quick card" aria-labelledby="h-preventivo">
+          <div>
+            <h3 id="h-preventivo">Richiedi un preventivo</h3>
+            <p class="muted">Mandaci un'email per un preventivo personalizzato oppure scrivici su WhatsApp o Instagram.</p>
+          </div>
+          <div class="info">
+            <span class="label">Email:</span>
+            <a class="email-link"
+               href="mailto:capucciniluca2002@gmail.com?subject=Richiesta%20preventivo%20eCommerce&body=Scrivi%20qui%20le%20tue%20esigenze%20e%20tempistiche."
+               aria-label="Invia una email a capucciniluca2002@gmail.com">
+              capucciniluca2002@gmail.com
+            </a>
+            <button class="btn btn-light btn-copy" type="button" data-email="capucciniluca2002@gmail.com">Copia</button>
+          </div>
+          <div class="actions">
+            <a class="btn" target="_blank" rel="noopener"
+               href="https://wa.me/+393662883732?text=Ciao%2C%20vorrei%20informazioni%20sul%20servizio%20eCommerce.">
+              WhatsApp
+            </a>
+            <a class="btn btn-light" target="_blank" rel="noopener"
+               href="https://www.instagram.com/lucacapuccinii?igsh=cXJtdWY0YmZ4Mm9u">
+              Instagram
+            </a>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+  </main>
+
+  <a href="#top" class="btn to-top" aria-label="Torna su">↑</a>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Ecommerce Studio — HTML, CSS & JS.</p>
+    </div>
+  </footer>
+
+  <script>
+    // TOC attivo + bottone "torna su"
+    const links=[...document.querySelectorAll('.toc a')];
+    const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const toTop=document.querySelector('.to-top');
+    const yo=document.getElementById('year'); if(yo) yo.textContent=new Date().getFullYear();
+
+    const onScroll=()=>{
+      const y=window.scrollY+120;
+      let current=null;
+      for(const s of sections){ if(s && s.offsetTop<=y) current=s.id; }
+      links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+current));
+      toTop.classList.toggle('show', window.scrollY>500);
+    };
+    document.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // Form lead -> mailto
+    const form=document.getElementById('lead-form');
+    if(form){
+      form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        const fd=new FormData(form);
+        const nome=fd.get('nome')||'';
+        const email=fd.get('email')||'';
+        const budget=fd.get('budget')||'';
+        const msg=fd.get('messaggio')||'';
+        const subject=encodeURIComponent('Richiesta preventivo eCommerce');
+        const body=encodeURIComponent(
+`Nome: ${nome}
+Email: ${email}
+Budget: ${budget}
+
+Messaggio:
+${msg}`
+        );
+        window.location.href=`mailto:capucciniluca2002@gmail.com?subject=${subject}&body=${body}`;
+      });
+    }
+
+
+document.addEventListener('click',(e)=>{
+      const btn=e.target.closest('.btn-copy');
+      if(!btn) return;
+      const email=btn.getAttribute('data-email');
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(email).then(()=>{
+          const old=btn.textContent; btn.textContent='Copiato';
+          setTimeout(()=>btn.textContent=old,1500);
+        });
+      }else{
+        const ta=document.createElement('textarea'); ta.value=email;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta);
+        const old=btn.textContent; btn.textContent='Copiato';
+        setTimeout(()=>btn.textContent=old,1500);
+      }
+    });
+
+
+  // Toggle menu mobile
+  const navToggle=document.querySelector('.menu-toggle');
+  const navPanel=document.getElementById('site-links');
+  if(navToggle && navPanel){
+    navToggle.addEventListener('click', ()=>{
+      const open=navPanel.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Chiudi su click link (mobile)
+    navPanel.addEventListener('click',(e)=>{
+      if(e.target.tagName==='A' && navPanel.classList.contains('open')){
+        navPanel.classList.remove('open');
+        navToggle.setAttribute('aria-expanded','false');
+      }
+    });
+
+    // Chiudi tornando a desktop
+    window.addEventListener('resize', ()=>{
+      if(window.innerWidth>860 && navPanel.classList.contains('open')){
+        navPanel.classList.remove('open');
+        navToggle.setAttribute('aria-expanded','false');
+      }
+    }, {passive:true});
+  }
+  </script>
+</body>
+</html>

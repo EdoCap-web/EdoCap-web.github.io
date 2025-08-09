@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Il Tuo Nome - Web Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+  :root{
+    --c-light:#ECF0F1;
+    --c-dark:#2C3E50;
+    --radius:14px;
+    --radius-sm:10px;
+    --shadow:0 10px 30px rgba(44,62,80,.15);
+    --shadow-sm:0 6px 18px rgba(44,62,80,.12);
+    --maxw:1150px;
+  }
+
+  /* Reset */
+  *{margin:0; padding:0; box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+    line-height:1.6;
+    color:var(--c-dark);
+    background:var(--c-light);
+  }
+  a{color:var(--c-dark); text-decoration:none; text-underline-offset:3px}
+  .container{width:clamp(92%, 85vw, var(--maxw)); margin:0 auto}
+
+  /* Buttons in stile Ecommerce */
+  .btn{
+    display:inline-block; padding:.85rem 1.2rem; border-radius:999px;
+    background:var(--c-dark); color:var(--c-light); border:2px solid var(--c-dark);
+    font-weight:700; letter-spacing:.3px; transition:.25s ease; text-align:center
+  }
+  .btn:hover{background:transparent; color:var(--c-dark)}
+  .btn-light{background:#fff; color:var(--c-dark); border:2px solid #fff}
+  .btn-light:hover{background:transparent; border-color:var(--c-dark)}
+
+  /* Navbar stile Ecommerce (traslucida, testo scuro) */
+  nav{
+    position:fixed; top:0; left:0; width:100%; z-index:1000;
+    background:rgba(236,240,241,.85); backdrop-filter:saturate(1.1) blur(8px);
+    border-bottom:1px solid rgba(44,62,80,.15); padding:.9rem 0;
+    transition:box-shadow .2s ease, background-color .2s ease;
+  }
+  nav.scrolled{box-shadow:var(--shadow-sm); background:rgba(236,240,241,.92)}
+  nav .container{display:flex; align-items:center; justify-content:space-between}
+
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  .brand{display:flex; align-items:center; gap:.6rem; font-weight:800; color:var(--c-dark); text-decoration:none}
+  .brand .mark{width:28px; height:28px; border-radius:8px; background:var(--c-dark); box-shadow:inset 0 0 0 4px var(--c-light)}
+  .nav-links{list-style:none; display:flex; gap:1rem; align-items:center; margin:0}
+  .nav-links a{
+    position:relative; color:var(--c-dark); font-weight:600; opacity:.95; padding:.25rem .1rem; transition:opacity .2s ease
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-2px; height:2px;
+    background:var(--c-dark); transform:scaleX(0); transform-origin:left; transition:transform .25s ease
+  }
+  .nav-links a:hover{opacity:1}
+  .nav-links a:hover::after{transform:scaleX(1)}
+
+  .nav-cta{margin-left:1rem}
+  .only-mobile{display:none}
+
+  /* Hamburger */
+  .menu-toggle{
+    display:none; border:1.5px solid rgba(44,62,80,.25); background:#fff; color:var(--c-dark);
+    border-radius:10px; padding:.45rem .6rem; cursor:pointer; line-height:1
+  }
+  .menu-toggle:focus-visible{outline:3px solid rgba(44,62,80,.35); outline-offset:2px}
+  .menu-toggle .burger{
+    display:inline-block; width:18px; height:2px; background:var(--c-dark);
+    position:relative; vertical-align:middle; transition:background .2s ease
+  }
+  .menu-toggle .burger::before,
+  .menu-toggle .burger::after{
+    content:""; position:absolute; left:0; width:18px; height:2px; background:var(--c-dark); transition:transform .2s ease, top .2s ease, opacity .2s ease
+  }
+  .menu-toggle .burger::before{top:-6px}
+  .menu-toggle .burger::after{top:6px}
+  .menu-toggle[aria-expanded="true"] .burger{background:transparent}
+  .menu-toggle[aria-expanded="true"] .burger::before{top:0; transform:rotate(45deg)}
+  .menu-toggle[aria-expanded="true"] .burger::after{top:0; transform:rotate(-45deg)}
+
+  /* Mobile panel */
+  @media (max-width: 860px){
+    .menu-toggle{display:block}
+    .nav-cta{display:none}
+    .nav-links{
+      position:absolute; top:100%; right:0; left:0; margin:0;
+      background:#fff; border-bottom:1px solid rgba(44,62,80,.15);
+      display:none; flex-direction:column; gap:0; padding:.5rem
+    }
+    .nav-links.open{display:flex}
+    .nav-links li a{padding:.6rem 1rem; display:block}
+    .only-mobile{display:block}
+  }
+
+  /* Hero Section con overlay in palette Ecommerce */
+  .hero{
+    position:relative; height:100vh; display:flex; align-items:center; justify-content:center;
+    color:#fff; text-align:center; overflow:hidden;
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0; z-index:-1;
+    background:
+      radial-gradient(1200px 500px at 85% -50%, rgba(44,62,80,.45), transparent 55%),
+      radial-gradient(1200px 500px at -10% 120%, rgba(44,62,80,.35), transparent 60%),
+      rgba(255, 255, 255, 0);
+  }
+  #video-bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; filter:grayscale(.2) contrast(1.05)}
+  .hero h1{font-size:3.2rem; font-weight:800; text-shadow:0 2px 14px rgba(0,0,0,.25)}
+  .hero p{font-size:1.15rem; margin:1rem 0; opacity:.95}
+
+  /* Sections */
+  section{padding:6rem 0; text-align:center}
+  h2{font-size:2rem; margin-bottom:2rem; color:var(--c-dark)}
+
+  /* About Section */
+  .about{padding:60px 0; background:transparent}
+  .about-content{display:grid; gap:20px}
+  .about-half{
+    display:grid; grid-template-columns:120px 1fr; grid-template-areas:"img text";
+    align-items:center; gap:18px;
+    background:#fff; border:1.5px solid rgba(44,62,80,.12);
+    border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); padding:18px;
+  }
+  .about-half img{
+    grid-area:img; width:120px; height:120px; object-fit:cover; border-radius:50%;
+    box-shadow:0 4px 14px rgba(44,62,80,.12)
+  }
+  .about-text{grid-area:text; margin:0}
+  .about-text p{font-size:1.05rem; color:var(--c-dark); line-height:1.7}
+
+  /* Desktop: immagine/text alternati, card più ampie */
+  @media (min-width:920px){
+    .about-content{gap:24px}
+    .about-half{grid-template-columns:160px 1fr; padding:22px}
+    .about-half img{width:160px; height:160px}
+    .about-half:nth-child(even){
+      grid-template-columns:1fr 160px; grid-template-areas:"text img";
+    }
+  }
+
+  /* Mobile: stack verticale, centro contenuti, tipografia più leggibile */
+  @media (max-width:680px){
+    .about-half{
+      grid-template-columns:1fr; grid-template-areas:"img" "text";
+      text-align:center; padding:16px;
+    }
+    .about-text p{font-size:1rem}
+    .about-half img{margin-inline:auto}
+  }
+
+  /* Portfolio Section */
+  .portfolio{background:transparent}
+  .projects{display:flex; flex-direction:column; gap:20px}
+  .project{width:100%}
+  .project video{width:100%; height:auto; border-radius:10px; box-shadow:var(--shadow-sm); background:#fff}
+
+  /* Services Section */
+  .service-list{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem;
+  }
+  .service{
+    background:#fff; padding:1.5rem; border-radius:var(--radius-sm);
+    border:1.5px solid rgba(44,62,80,.12); box-shadow:var(--shadow-sm); transition:transform .2s ease;
+  }
+  .service:hover{transform:translateY(-2px)}
+  .service i{font-size:2rem; margin-bottom:1rem; color:var(--c-dark)}
+  .service img{max-width:100%; height:auto; display:block; margin:0 auto 20px; border-radius:10px}
+
+  /* Services – upgrade */
+  .services .subtitle{margin-top:-1rem; margin-bottom:1.2rem; opacity:.9}
+  .service{display:flex; flex-direction:column; align-items:flex-start}
+  .service .icon-circle{
+    width:42px; height:42px; border-radius:50%;
+    background:var(--c-dark); color:#fff; display:grid; place-items:center; margin-bottom:.6rem
+  }
+  .service .icon-circle i{font-size:1.1rem}
+  .service .list-check{list-style:none; padding:0; margin:.6rem 0 0}
+  .service .list-check li{position:relative; padding-left:22px; margin:.25rem 0; text-align:left}
+  .service .list-check li::before{
+    content:"✔"; position:absolute; left:0; top:.05rem; color:var(--c-dark); font-weight:700; font-size:.95rem
+  }
+  .service .tags{display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.7rem}
+  .service .tag{
+    font-size:.85rem; padding:.28rem .6rem; border-radius:999px;
+    background:#fff; border:1.5px solid rgba(44,62,80,.18)
+  }
+  .service .cta{margin-top:1rem}
+  .service .cta .btn{padding:.55rem .9rem}
+
+  /* Contact Section */
+  .contact-container{
+    background:#fff; padding:40px; border-radius:var(--radius);
+    border:1.5px solid rgba(44,62,80,.12); box-shadow:var(--shadow);
+    margin-top:40px; text-align:center;
+  }
+  .contact-container h2{font-size:2rem; margin-bottom:20px; color:var(--c-dark)}
+  .contact-content{display:flex; justify-content:space-between; align-items:flex-start; gap:20px}
+  .contact-left, .contact-right{flex:1; margin:0 20px}
+
+  .contact-item{
+    display:flex; align-items:center; gap:.6rem; margin:.4rem 0;
+  }
+  .contact-item i{
+    width:28px; height:28px; border-radius:50%;
+    background:var(--c-dark); color:#fff; display:grid; place-items:center; font-size:.9rem;
+  }
+  .contact-item a{text-decoration:underline; text-underline-offset:3px}
+
+  .social-grid{
+    display:grid; gap:12px; margin-top:10px;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  }
+  .social-card{
+    display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
+    padding:12px 14px; border:1.5px solid rgba(44,62,80,.12);
+    border-radius:var(--radius-sm); background:#fff; box-shadow:var(--shadow-sm);
+    text-decoration:none; color:inherit; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .social-card:hover{transform:translateY(-2px); box-shadow:var(--shadow)}
+  .brand-badge{
+    width:38px; height:38px; border-radius:10px; display:grid; place-items:center; color:#fff; font-size:1.1rem; font-weight:800
+  }
+  .social-meta{display:flex; flex-direction:column; line-height:1.2}
+  .social-meta strong{font-weight:800}
+  .social-meta span{font-size:.9rem}
+
+  /* Varianti brand */
+  .social-card.whatsapp{border-color:rgba(37,211,102,.25); background:linear-gradient(180deg,#fff, #f7fbf9)}
+  .social-card.whatsapp .brand-badge{background:#25D366}
+  .social-card.instagram{
+    border-color:rgba(225,48,108,.25);
+    background:linear-gradient(180deg,#fff, #fcf7fb);
+  }
+  .social-card.instagram .brand-badge{
+    background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF,#515BD4);
+  }
+
+  @media (max-width: 768px){
+    .about-content{flex-direction:column}
+    .contact-content{
+      flex-direction:column;
+      align-items:center; /* centra le due colonne */
+      gap:18px;
+    }
+    .contact-left, .contact-right{
+      margin:10px 0;
+      text-align:center;
+      width:100%;
+    }
+    nav .nav-links{display:none}
+    .menu-icon{display:block}
+  }
+
+  /* iOS text scaling */
+  html{-webkit-text-size-adjust:100%}
+
+  /* Hero: altezza corretta su iPhone, tipografia fluida */
+  .hero{min-height:100svh; height:auto; padding:5rem 0 4rem}
+  .hero h1{font-size:clamp(2rem, 6vw, 3.2rem)}
+  .hero p{font-size:clamp(1rem, 2.7vw, 1.15rem)}
+
+  /* Bottoni: target touch */
+  .btn{min-height:44px; line-height:1.1; touch-action:manipulation}
+
+  /* Grid servizi più flessibile su mobile */
+  .service-list{grid-template-columns:repeat(auto-fit, minmax(240px,1fr))}
+  @media (max-width:380px){ .service-list{grid-template-columns:1fr} }
+
+  /* Spazi sezioni e container su mobile */
+  @media (max-width:860px){
+    section{padding:4rem 0}
+    .container{width:clamp(96%, 92vw, var(--maxw))}
+  }
+  @media (max-width:520px){
+    section{padding:3rem 0}
+    .btn{padding:.8rem 1rem}
+  }
+
+  /* Navbar: safe‑area (iPhone notch) */
+  nav{padding-top:calc(.9rem + env(safe-area-inset-top)); padding-bottom:.9rem}
+  </style>
+</head>
+<body>
+  <!-- Navbar moderna -->
+  <nav role="navigation" aria-label="Navigazione principale">
+    <div class="container">
+      <a href="#" class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Luca & Edo</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="primary-links">
+        <span class="sr-only">Apri/chiudi menu</span>
+        <span class="burger" aria-hidden="true"></span>
+      </button>
+
+      <ul id="primary-links" class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#aboutus">About us</a></li>
+        <li><a href="#portfolio">Progetti</a></li>
+        <li><a href="#services">Servizi</a></li>
+        <li><a href="#contact">Contatti</a></li>
+        <li><a href="./Ecommerce.html">Sviluppo Ecommerce</a></li>
+        <li class="only-mobile"><a class="btn btn-sm" href="#contact">Contattami</a></li>
+      </ul>
+
+      <a href="#contact" class="btn btn-sm nav-cta">Contattami</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <video autoplay muted loop id="video-bg" playsinline webkit-playsinline>
+      <source src="./Video/Coding _ Programming _ Background Video FHD.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <div>
+      <h1>Ciao, sono il Tuo Nome</h1>
+      <p>Sviluppatore web e appassionato di tecnologia</p>
+      <a href="#portfolio" class="btn">Scopri il mio lavoro</a>
+    </div>
+  </section>
+
+  <section id="aboutus" class="about container">
+    <h2>Chi sono</h2>
+    <div class="about-content">
+      <div class="about-half">
+        <img src="./images/Cappu.jpeg" alt="Foto di Il Tuo Nome" />
+        <div class="about-text">
+          <p>Sono Luca, attuale studente presso l'università di Roma la Sapienza, specializzando in Cybersecurity. Durante la triennale di informatica, presso l'università di Perugia, ho coltivato una passione per lo sviluppo di applicativi web di vario genere. Ho realizzato diversi progetti insieme al mio collega Edoardo, con il quale condivido questo progetto che portiamo avanti con passione e dedizione. </p>
+        </div>
+      </div>
+      <div class="about-half">
+        <img src="./images/Edo.jpeg" alt="Foto di Collaboratrice" />
+        <div class="about-text">
+          <p>Sono Edoardo, attuale studente presso l'università di Bologna, specializzando in Sviluppo Software. Durante la triennale di informatica, presso l'università di Perugia, ho coltivato una passione per lo sviluppo di applicativi web di vario genere insieme al mio collega ed amico Luca. Ho realizzato diversi progetti insieme al mio collega Luca, con il quale condivido questo progetto che portiamo avanti con passione e dedizione.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio" class="portfolio container">
+    <h2>Portfolio</h2>
+    <div class="projects">
+      <div id="project1" class="project">
+        <video controls width="100%" height="auto">
+          <source src="./Video/VOD_ED4.mp4" type="video/webm" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div id="project2" class="project">
+        <video controls width="100%" height="auto">
+          <source src="./Video/MI.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div id="project3" class="project">
+        <video controls width="100%" height="auto">
+          <source src="./Video/PSI.mp4" type="video/webm" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
+ <section id="services" class="services container">
+  <h2>Servizi</h2>
+  <p class="subtitle">Siti WordPress ed eCommerce WooCommerce veloci, scalabili e facili da gestire.</p>
+  <div class="service-list">
+    <div class="service">
+      <span class="icon-circle"><i class="fab fa-wordpress"></i></span>
+      <h3>Sviluppo siti WordPress</h3>
+      <p>Siti moderni e responsive, costruiti con temi leggeri e componenti su misura.</p>
+      <ul class="list-check">
+        <li>Setup e configurazione WordPress</li>
+        <li>Plugin essenziali scelti e configurati</li>
+        <li>Pagine rapide e mobile‑first</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">WordPress</span>
+        <span class="tag">Plugin</span>
+        <span class="tag">Design System</span>
+      </div>
+    </div>
+
+    <div class="service">
+      <span class="icon-circle"><i class="fas fa-cart-shopping"></i></span>
+      <h3>eCommerce con WooCommerce</h3>
+      <p>Negozi online completi: catalogo, pagamenti, spedizioni e tracking.</p>
+      <ul class="list-check">
+        <li>Catalogo, varianti e tassonomie pulite</li>
+        <li>Checkout ottimizzato, email transazionali</li>
+        <li>Gateway Stripe/PayPal e corrieri</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">WooCommerce</span>
+        <span class="tag">Checkout</span>
+        <span class="tag">Stripe/PayPal</span>
+      </div>
+    </div>
+
+    <div class="service">
+      <span class="icon-circle"><i class="fas fa-gauge-high"></i></span>
+      <h3>Ottimizzazione & SEO</h3>
+      <p>Performance e posizionamento per aumentare conversioni e visibilità.</p>
+      <ul class="list-check">
+        <li>Core Web Vitals, caching e CDN</li>
+        <li>Immagini WebP, lazyload, minify</li>
+        <li>SEO on‑page e dati strutturati</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Performance</span>
+        <span class="tag">SEO</span>
+        <span class="tag">CDN/Cache</span>
+      </div>
+    </div>
+
+    <div class="service">
+      <span class="icon-circle"><i class="fas fa-shield-halved"></i></span>
+      <h3>Manutenzione & Sicurezza</h3>
+      <p>Gestione continua, aggiornamenti e monitoraggio proattivo.</p>
+      <ul class="list-check">
+        <li>Backup automatici e restore</li>
+        <li>Aggiornamento core, temi e plugin</li>
+        <li>Hardening, anti‑spam e uptime</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Security</span>
+        <span class="tag">Backup</span>
+        <span class="tag">Monitoring</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section id="contact" class="contact container">
+  <h2>Contatti</h2>
+  <div class="contact-container">
+    <div class="contact-content">
+      <!-- Colonna Sinistra: Info di contatto -->
+      <div class="contact-left">
+        <div class="contact-item">
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone-alt" aria-hidden="true"></i>
+          <a href="tel:+390612345678">+39 355 288 3732</a>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+          <a href="mailto:info@iltuonome.it">capucciniluca2002@gmail.com</a>
+        </div>
+      </div>
+
+      <!-- Colonna Destra: Social -->
+      <div class="contact-right">
+        <h3>Seguimi su</h3>
+        <div class="social-grid">
+          <a href="https://wa.me/393662883732" target="_blank" rel="noopener" class="social-card whatsapp" aria-label="WhatsApp">
+            <span class="brand-badge"><i class="fab fa-whatsapp"></i></span>
+            <div class="social-meta">
+              <strong>WhatsApp</strong>
+              <span>Chatta con me</span>
+            </div>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+
+          <a href="https://www.instagram.com/lucacapuccinii/" target="_blank" rel="noopener" class="social-card instagram" aria-label="Instagram">
+            <span class="brand-badge"><i class="fab fa-instagram"></i></span>
+            <div class="social-meta">
+              <strong>Instagram</strong>
+              <span>Foto e progetti</span>
+            </div>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <footer style="background: var(--c-dark); color: var(--c-light); text-align: center; padding: 1.5rem 0; font-size: 0.9rem;">
+  <div class="container">
+    <p>© 2025 Luca & Edo. Tutti i diritti riservati.</p>
+  </div>
+</footer>
+
+
+  <script>
+    // Navbar: hamburger + shadow on scroll
+    const nav = document.querySelector('nav');
+    const toggle = document.querySelector('.menu-toggle');
+    const panel = document.getElementById('primary-links');
+
+    function setScrolled(){ nav.classList.toggle('scrolled', window.scrollY > 4); }
+    window.addEventListener('scroll', setScrolled, {passive:true}); setScrolled();
+
+    if(toggle && panel){
+      toggle.addEventListener('click', ()=>{
+        const open = panel.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      // Chiudi su click link (mobile)
+      panel.addEventListener('click', (e)=>{
+        if(e.target.tagName === 'A' && panel.classList.contains('open')){
+          panel.classList.remove('open');
+          toggle.setAttribute('aria-expanded','false');
+        }
+      });
+      // Chiudi il menu tornando in desktop
+      window.addEventListener('resize', ()=>{
+        if(window.innerWidth > 860 && panel.classList.contains('open')){
+          panel.classList.remove('open');
+          toggle.setAttribute('aria-expanded','false');
+        }
+      }, {passive:true});
+    }
+  </script>
+</body>
+</html>
