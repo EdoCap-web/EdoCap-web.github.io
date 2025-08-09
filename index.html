@@ -287,6 +287,39 @@
 
   /* Navbar: safe‑area (iPhone notch) */
   nav{padding-top:calc(.9rem + env(safe-area-inset-top)); padding-bottom:.9rem}
+
+  /* Popup legale all'ingresso */
+  .modal-overlay{
+    position:fixed; inset:0; display:grid; place-items:center; padding:16px;
+    background:rgba(44,62,80,.45); backdrop-filter:blur(4px); z-index:2000;
+  }
+  .modal-box{
+    width:min(92%, 620px); background:#fff; color:var(--c-dark);
+    border:1.5px solid rgba(44,62,80,.12); border-radius:var(--radius);
+    box-shadow:var(--shadow);
+  }
+  .modal-body{padding:18px 18px 10px}
+  .modal-title{margin:0 0 .4rem; font-size:1.25rem; font-weight:800}
+  .modal-text{margin:0; opacity:.95; line-height:1.7}
+  .modal-actions{
+    display:flex; justify-content:flex-end; gap:10px; padding:10px 18px 16px;
+  }
+  .btn-ghost{
+    background:transparent; color:var(--c-dark); border:2px solid rgba(44,62,80,.25);
+    border-radius:999px; padding:.65rem 1rem; font-weight:700; cursor:pointer;
+    transition:.2s ease;
+  }
+  .btn-ghost:hover{border-color:var(--c-dark)}
+  @media (max-width:520px){
+    .modal-title{font-size:1.15rem}
+    .modal-actions{justify-content:center}
+  }
+
+  /* Assicura che l'overlay venga nascosto quando ha l’attributo hidden */
+  .modal-overlay[hidden]{ display:none !important; }
+  /* Popup legale: assicurati che [hidden] nasconda davvero l’overlay */
+  .modal-overlay[hidden]{ display:none !important; }
+  .modal-actions button{ cursor:pointer }
   </style>
 </head>
 <body>
@@ -323,9 +356,9 @@
       Your browser does not support the video tag.
     </video>
     <div>
-      <h1>Ciao, sono il Tuo Nome</h1>
-      <p>Sviluppatore web e appassionato di tecnologia</p>
-      <a href="#portfolio" class="btn">Scopri il mio lavoro</a>
+      <h1>Ciao, siamo Luca ed Edo</h1>
+      <p>Sviluppatori web e appassionati di tecnologia</p>
+      <a href="#portfolio" class="btn">Scopri i nostri lavori</a>
     </div>
   </section>
 
@@ -495,6 +528,22 @@
 </footer>
 
 
+  <!-- Popup legale -->
+  <div id="legal-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="legal-title" hidden>
+    <div class="modal-box" role="document">
+      <div class="modal-body">
+        <h3 id="legal-title" class="modal-title">Informativa</h3>
+        <p class="modal-text">
+          Benvenuto sul nostro sito. Siamo due studenti universitari e offriamo servizi di realizzazione siti web esclusivamente su richiesta, in via del tutto occasionale e non continuativa. I progetti che realizziamo sono svolti senza carattere di abitualità, nel pieno rispetto della normativa vigente (art. 2222 c.c.), e non costituiscono un’attività professionale organizzata.
+        </p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" data-close="1">Chiudi</button>
+        <button type="button" class="btn" data-accept="1">Ho capito</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Navbar: hamburger + shadow on scroll
     const nav = document.querySelector('nav');
@@ -524,6 +573,33 @@
         }
       }, {passive:true});
     }
+
+    // Popup legale: mostra a ogni ricarica (rimosso il gating su sessionStorage)
+    (function(){
+      var modal = document.getElementById('legal-modal');
+      if(!modal) return;
+      var acceptBtn = modal.querySelector('[data-accept]');
+      var closeBtn  = modal.querySelector('[data-close]');
+      var doc = document;
+
+      function openModal(){
+        modal.removeAttribute('hidden');
+        doc.body.style.overflow = 'hidden';
+        var f = acceptBtn || closeBtn; if(f && f.focus) f.focus();
+      }
+      function closeModal(){
+        modal.setAttribute('hidden','');
+        doc.body.style.overflow = '';
+      }
+
+      if(acceptBtn) acceptBtn.addEventListener('click', closeModal);
+      if(closeBtn)  closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+      doc.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal(); });
+
+      // Mostra SEMPRE all'ingresso
+      openModal();
+    })();
   </script>
 </body>
 </html>
