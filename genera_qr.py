@@ -1,23 +1,30 @@
-import qrcode
+from pathlib import Path
+import argparse
+import segno
 
-# URL fisso che il QR code deve aprire
-url = "https://edocap-web.github.io/"
+LINK = "https://edocap-web.github.io/"
 
-# Crea il QR Code
-qr = qrcode.QRCode(
-    version=1,  # Controlla la dimensione del QR Code (1 è il più piccolo)
-    error_correction=qrcode.constants.ERROR_CORRECT_L,  # Livello di correzione degli errori
-    box_size=10,  # Dimensione di ogni box del QR
-    border=4,  # Bordo attorno al QR Code
-)
+def generate_qr(out_dir: Path, name: str, scale: int, border: int, dark: str, light: str):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    q = segno.make(LINK, error='h')  # alta correzione d'errore
+    png_path = out_dir / f"{name}.png"
+    svg_path = out_dir / f"{name}.svg"
+    q.save(png_path, scale=scale, border=border, dark=dark, light=light)
+    q.save(svg_path, border=border, dark=dark, light=light)
+    print(f"Creati:\n - {png_path}\n - {svg_path}")
 
-qr.add_data(url)
-qr.make(fit=True)
+def main():
+    parser = argparse.ArgumentParser(description="Genera QR code statici per edocap-web.github.io")
+    parser.add_argument("-o", "--output-name", default="qr_edocap", help="Nome base del file (senza estensione)")
+    parser.add_argument("-d", "--dir", default="qrcodes", help="Directory di output")
+    parser.add_argument("--scale", type=int, default=8, help="Scala PNG (dimensione pixel per modulo)")
+    parser.add_argument("--border", type=int, default=2, help="Bordo (moduli)")
+    parser.add_argument("--dark", default="black", help="Colore moduli (es. black, #2C3E50)")
+    parser.add_argument("--light", default="white", help="Colore sfondo (es. white, transparent)")
+    args = parser.parse_args()
 
-# Genera l'immagine del QR Code
-img = qr.make_image(fill="black", back_color="white")
+    out_dir = Path(args.dir)
+    generate_qr(out_dir, args.output_name, args.scale, args.border, args.dark, args.light)
 
-# Salva il QR Code come immagine
-img.save("qrcode_fisso.png")
-
-print("QR Code generato e salvato come qrcode_fisso.png")
+if __name__ == "__main__":
+    main()
