@@ -271,6 +271,8 @@
   /* Bottoni: target touch */
   .btn{min-height:44px; line-height:1.1; touch-action:manipulation}
 
+  .btn:hover{color: yellow;}
+
   /* Grid servizi più flessibile su mobile */
   .service-list{grid-template-columns:repeat(auto-fit, minmax(240px,1fr))}
   @media (max-width:380px){ .service-list{grid-template-columns:1fr} }
@@ -320,6 +322,34 @@
   /* Popup legale: assicurati che [hidden] nasconda davvero l’overlay */
   .modal-overlay[hidden]{ display:none !important; }
   .modal-actions button{ cursor:pointer }
+
+  /* Dropdown nav */
+  .nav-links .dropdown{ position:relative }
+  .nav-links .dropbtn{
+    background:none; border:0; cursor:pointer; font:inherit; color:var(--c-dark);
+    font-weight:600; opacity:.95; padding:.25rem .1rem; display:flex; align-items:center; gap:.35rem
+  }
+  .nav-links .dropbtn:hover{ opacity:1 }
+  .nav-links .dropdown-menu{
+    position:absolute; top:100%; left:0; min-width:220px; z-index:1001;
+    display:none; padding:.4rem 0; background:#fff; border:1px solid rgba(44,62,80,.15);
+    border-radius:10px; box-shadow:var(--shadow-sm)
+  }
+  .nav-links .dropdown-menu a{display:block; padding:.55rem .9rem}
+  .nav-links .dropdown.open > .dropdown-menu{ display:block }
+
+  /* Apri su hover solo su desktop */
+  @media (min-width: 861px){
+    .nav-links .dropdown:hover > .dropdown-menu{ display:block }
+  }
+
+  /* Dropdown dentro il pannello mobile */
+  @media (max-width: 860px){
+    .nav-links .dropdown-menu{
+      position:static; border:none; box-shadow:none; padding:0 0 .3rem;
+    }
+    .nav-links .dropdown-menu a{ padding:.55rem 1.5rem }
+  }
   </style>
 </head>
 <body>
@@ -342,7 +372,18 @@
         <li><a href="#portfolio">Progetti</a></li>
         <li><a href="#services">Servizi</a></li>
         <li><a href="#contact">Contatti</a></li>
-        <li><a href="./Ecommerce.html">Sviluppo Ecommerce</a></li>
+
+        <!-- Dropdown Sviluppo Ecommerce -->
+        <li class="dropdown">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false">
+            Servizi offerti <i class="fas fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="./Ecommerce.html" role="menuitem">Ecommerce</a></li>
+            <li><a href="./DigitalMenu.html" role="menuitem">Menu Digitali</a></li>
+          </ul>
+        </li>
+
         <li class="only-mobile"><a class="btn btn-sm" href="#contact">Contattami</a></li>
       </ul>
 
@@ -359,6 +400,7 @@
       <h1>Ciao, siamo Luca ed Edo</h1>
       <p>Sviluppatori web e appassionati di tecnologia</p>
       <a href="#portfolio" class="btn">Scopri i nostri lavori</a>
+      <a href="#portfolio" class="btn">Cosa Sviluppiamo</a>
     </div>
   </section>
 
@@ -599,6 +641,38 @@
 
       // Mostra SEMPRE all'ingresso
       openModal();
+    })();
+
+    // Dropdown "Sviluppo Ecommerce"
+    (function(){
+      const dropdowns = document.querySelectorAll('.nav-links .dropdown');
+      dropdowns.forEach(dd => {
+        const btn = dd.querySelector('.dropbtn');
+        const menu = dd.querySelector('.dropdown-menu');
+        if(!btn || !menu) return;
+
+        btn.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const isOpen = dd.classList.toggle('open');
+          btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Chiudi il dropdown cliccando fuori
+        document.addEventListener('click', (e)=>{
+          if(!dd.contains(e.target)){
+            dd.classList.remove('open');
+            btn.setAttribute('aria-expanded','false');
+          }
+        });
+
+        // Chiudi con ESC
+        document.addEventListener('keydown', (e)=>{
+          if(e.key === 'Escape'){
+            dd.classList.remove('open');
+            btn.setAttribute('aria-expanded','false');
+          }
+        });
+      });
     })();
   </script>
 </body>

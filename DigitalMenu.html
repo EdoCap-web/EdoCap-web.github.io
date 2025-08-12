@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Menu Digitali con QR Code | WordPress per Ristoranti</title>
+  <meta name="description" content="Siti WordPress per ristoranti e locali: menu digitali sempre aggiornati, QR code permanenti, locandine drink e gestione allergeni.">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    /* Palette */
+    :root{
+      --c-light:#FFF7F2;          /* fondo chiaro caldo */
+      --c-dark:#0A0A0A;           /* nero */
+      --c-primary:#ff3c04;        /* arancione primario */
+      --c-accent:#f89c54;         /* arancione secondario */
+      --radius:14px;
+      --radius-sm:10px;
+      --shadow:0 10px 30px rgba(10,10,10,.15);
+      --shadow-sm:0 6px 18px rgba(10,10,10,.12);
+      --maxw:1150px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      color:var(--c-dark); background:var(--c-light); line-height:1.6;
+    }
+    a{ color:var(--c-dark) }
+    a:hover{ text-decoration:underline; text-underline-offset:3px }
+    .container{width:clamp(92%, 85vw, var(--maxw)); margin-inline:auto}
+
+    /* Navbar su fondo chiaro */
+    header{
+      background:rgba(255,255,255,.85);
+      border-bottom:1px solid rgba(0,0,0,.12);
+      padding-top:calc(.9rem + env(safe-area-inset-top)); padding-bottom:.9rem;
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between}
+    .brand{display:flex; align-items:center; gap:.7rem; font-weight:800; letter-spacing:.4px; text-decoration:none}
+    .brand .logo{
+      width:34px; height:34px; border-radius:10px;
+      background:var(--c-primary);
+      box-shadow:inset 0 0 0 4px #fff;
+    }
+    .links{display:flex; gap:1rem; align-items:center}
+    .btn-sm{padding:.55rem .9rem}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .menu-toggle{
+      display:none; border:1.5px solid rgba(44,62,80,.25); background:#fff; color:var(--c-dark);
+      border-radius:10px; padding:.45rem .6rem; cursor:pointer; line-height:1
+    }
+    .menu-toggle .burger{
+      display:inline-block; width:18px; height:2px; background:var(--c-dark);
+      position:relative; vertical-align:middle
+    }
+    .menu-toggle .burger::before,
+    .menu-toggle .burger::after{
+      content:""; position:absolute; left:0; width:18px; height:2px; background:var(--c-dark)
+    }
+    .menu-toggle .burger::before{top:-6px}
+    .menu-toggle .burger::after{top:6px}
+    @media (max-width: 860px){
+      .menu-toggle{display:block}
+      .nav{position:relative}
+      .links{
+        position:absolute; top:100%; right:0; left:0;
+        background:var(--c-light); border-bottom:1px solid rgba(44,62,80,.15);
+        display:none; flex-direction:column; gap:0; padding:.5rem
+      }
+      .links.open{display:flex}
+      .links a{padding:.6rem 1rem}
+      .links .btn{margin:.2rem 1rem}
+    }
+
+    /* Hero */
+    .hero{
+      background:#fff;                /* sfondo bianco */
+      color:var(--c-dark);            /* testo scuro */
+      min-height:auto;                /* evita altezza eccessiva */
+      display:grid; grid-template-columns:1.2fr .8fr; align-items:center; gap:24px;
+    }
+    .hero-inner{padding:48px min(6vw,48px)} /* riduce padding */
+    .hero .hero-media{display:grid; place-items:center; padding:24px}
+    .hero .hero-anim{width:min(100%, 420px); height:auto; aspect-ratio:1/1}
+
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr; padding-block:32px}
+      .hero-inner{padding:0 22px}
+      .hero .hero-media{padding:0}
+      .hero .hero-anim{width:min(85%, 360px)}
+    }
+    @media (max-width: 600px){
+      .hero{margin:12px auto 18px; border-radius:12px}
+      .hero-cta{gap:.6rem; justify-content:center}
+    }
+
+    /* Se c’è ancora lo style inline sul lottie, forza la dimensione */
+    lottie-player.hero-anim{width:min(100%,420px) !important; height:auto !important}
+
+    /* Sections e card */
+    main{padding:10px 0 60px}
+    section{margin:26px 0; padding:28px; background:#fff; border-radius:var(--radius); box-shadow:var(--shadow)}
+    .section-title{margin:0 0 .6rem; font-size:clamp(1.35rem, .7vw + 1rem, 1.8rem)}
+    .card{
+      padding:18px; border:1.5px solid rgba(44,62,80,.12); border-radius:var(--radius-sm);
+      background:linear-gradient(180deg,#fff, #f7f9fa); box-shadow:var(--shadow-sm)
+    }
+
+    /* Steps */
+    .steps{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr))}
+    .steps .step-num{
+      width:28px; height:28px; border-radius:50%; display:inline-grid; place-items:center;
+      background:var(--c-primary); color:#fff; font-size:.9rem; font-weight:800; margin-right:.5rem
+    }
+
+    /* Features */
+    .features{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr))}
+    .feature-card .icon{
+      width:36px; height:36px; border-radius:8px;
+      background:var(--c-primary); color:#fff; display:grid; place-items:center; font-weight:800; margin-bottom:.5rem
+    }
+
+    /* QR sample */
+    .qr-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(220px,1fr))}
+    .qr-box{display:grid; gap:10px; justify-items:center; text-align:center}
+    .qr{
+      width:180px; aspect-ratio:1/1; border-radius:12px; background:
+        conic-gradient(from 0deg at 50% 50%, #2C3E50 0 25%, transparent 25% 50%, #2C3E50 50% 75%, transparent 75% 100%),
+        radial-gradient(circle at 20% 20%, #2C3E50 10px, transparent 11px),
+        radial-gradient(circle at 80% 20%, #2C3E50 10px, transparent 11px),
+        radial-gradient(circle at 20% 80%, #2C3E50 10px, transparent 11px),
+        radial-gradient(circle at 80% 80%, #2C3E50 10px, transparent 11px),
+        #fff;
+      border:10px solid #fff; box-shadow:var(--shadow-sm)
+    }
+
+    /* Cases */
+    .cases{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(260px,1fr))}
+    .case h3{margin:.2rem 0 .4rem}
+    .case p{margin:0}
+
+    /* Pricing */
+    .pricing{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); align-items:stretch}
+    .price .h{font-size:1.6rem; font-weight:900}
+    .price ul{list-style:none; padding:0; margin:.6rem 0 0}
+    .price li{padding:.25rem 0}
+
+    /* CTA banner */
+    .cta-banner{
+      background:var(--c-primary); color:#fff; display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between
+    }
+    .cta-banner h3{margin:.2rem 0}
+    .cta-banner .actions{display:flex; gap:10px; flex-wrap:wrap}
+
+    /* Contatti rapidi (riuso) */
+    .contact-quick.card{display:grid; gap:12px}
+    .contact-quick .info{display:flex; align-items:center; gap:10px; flex-wrap:wrap; border-top:1px solid rgba(44,62,80,.12); padding-top:10px;}
+    .contact-quick .label{font-weight:700}
+    .contact-quick .actions{display:flex; gap:10px; flex-wrap:wrap}
+    @media (max-width:600px){
+      .contact-quick .info{flex-direction:column; align-items:flex-start}
+      .contact-quick .actions{flex-direction:column; align-items:stretch}
+      .contact-quick .actions .btn{width:100%}
+    }
+
+    /* Footer */
+    footer{
+      margin:34px 0 0; padding:28px 0 44px; text-align:center;
+      color:rgba(44,62,80,.85); border-top:1px solid rgba(0,0,0,.12)
+    }
+
+    /* Back to top */
+    .to-top{
+      position:fixed; right:18px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:40; transform:translateY(120%);
+      transition:transform .25s ease; box-shadow:var(--shadow-sm)
+    }
+    .to-top.show{transform:translateY(0)}
+
+    /* Navbar come su index/Ecommerce */
+    .nav-links{list-style:none; display:flex; gap:1rem; align-items:center; margin:0}
+    .nav-links a{
+      position:relative; color:var(--c-dark); font-weight:600; opacity:.95; padding:.25rem .1rem; transition:opacity .2s ease;
+      text-decoration:none;
+    }
+    .nav-links a::after{
+      content:""; position:absolute; left:0; right:0; bottom:-2px; height:2px;
+      background:var(--c-primary); transform:scaleX(0); transform-origin:left; transition:transform .25s ease;
+    }
+    .nav-links a:hover{opacity:1}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-links a:focus{outline:none}
+    .nav-links a:focus-visible::after{transform:scaleX(1)}
+
+    /* Dropdown */
+    .nav .dropdown{position:relative}
+    .nav .dropbtn{
+      background:none; border:0; cursor:pointer; font:inherit;
+      color:var(--c-dark); font-weight:600; opacity:.95;
+      padding:.25rem .1rem; display:flex; align-items:center; gap:.35rem;
+    }
+    .nav .dropbtn:hover{opacity:1}
+    .nav .dropbtn:focus{outline:none}
+    .nav .dropbtn:focus-visible{box-shadow:0 0 0 3px rgba(0,0,0,.12); border-radius:8px}
+    .nav .dropbtn::after{content:"▾"; font-size:.8em; transform:translateY(-1px)}
+
+    .nav .dropdown-menu{
+      position:absolute; top:100%; left:0; min-width:220px; z-index:1001;
+      display:none; padding:.4rem 0; background:#fff; border:1px solid rgba(0,0,0,.15);
+      border-radius:10px; box-shadow:var(--shadow-sm);
+      list-style:none;
+      margin:0;
+    }
+    .nav .dropdown-menu li{ list-style:none }
+    .nav .dropdown.open > .dropdown-menu{display:block}
+    .nav .dropdown-menu a{display:block; padding:.55rem .9rem; text-decoration:none}
+
+    /* Mobile panel */
+    @media (max-width: 860px){
+      .menu-toggle{display:block}
+      .nav{position:relative}
+      .nav .nav-links{
+        position:absolute; top:100%; right:0; left:0;
+        background:var(--c-light); border-bottom:1px solid rgba(0,0,0,.12);
+        display:none; flex-direction:column; gap:0; padding:.5rem;
+      }
+      #site-links.open{display:flex}
+      .nav .nav-links li a{padding:.6rem 1rem; display:block}
+      .nav .dropdown-menu{
+        position:static; border:none; box-shadow:none; padding:0 0 .3rem;
+      }
+      .nav .dropdown-menu a{padding:.55rem 1rem}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Navigazione principale">
+      <a class="brand" href="./index.html">
+        <span class="logo" aria-hidden="true"></span>
+        <span>Luca & Edo</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="site-links">
+        <span class="sr-only">Apri/chiudi menu</span>
+        <span class="burger" aria-hidden="true"></span>
+      </button>
+
+      <ul id="site-links" class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li class="dropdown">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false">Servizi offerti</button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="./Ecommerce.html" role="menuitem">Ecommerce</a></li>
+            <li><a href="./DigitalMenu.html" role="menuitem">Menù Digitali</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero container" aria-labelledby="h-hero">
+    <div class="hero-inner">
+      <h1 id="h-hero">Menu digitali con QR code permanenti</h1>
+      <p>
+        Realizziamo con WordPress menu digitali per ristoranti e locali: aggiornabili in autonomia,
+        veloci da consultare, con QR code permanenti e locandine drink coordinate.
+      </p>
+      <div class="hero-cta">
+        <a class="btn" href="#processo">Scopri il flusso</a>
+        <a class="btn-light btn" href="#contatti">Richiedi una demo</a>
+      </div>
+      <div class="hero-cta" style="margin-top:.6rem">
+        <span class="chip">WordPress + plugin affidabili</span>
+        <span class="chip">Aggiornamenti in 1 click</span>
+        <span class="chip">Allergeni e multilingua</span>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <lottie-player
+        class="hero-anim"
+        src="./Animations/order food now delivery.json"
+        background="transparent"
+        speed="1"
+        loop
+        autoplay
+        aria-label="Animazione ordine cibo"
+      ></lottie-player>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="processo" aria-labelledby="h-proc">
+      <h2 class="section-title" id="h-proc">Processo in 8 passi</h2>
+      <div class="steps">
+        <div class="card"><div><span class="step-num">1</span><strong>Brief & analisi</strong></div><p class="muted">Menu, categorie, allergeni, branding e bisogni del locale.</p></div>
+        <div class="card"><div><span class="step-num">2</span><strong>Setup WordPress</strong></div><p class="muted">Installazione sicura, tema leggero e plugin essenziali.</p></div>
+        <div class="card"><div><span class="step-num">3</span><strong>Design del menu</strong></div><p class="muted">Struttura chiara per antipasti, primi, secondi, drink e menù bimbi.</p></div>
+        <div class="card"><div><span class="step-num">4</span><strong>Contenuti e allergeni</strong></div><p class="muted">Piatti, varianti, prezzi, icone allergeni e traduzioni.</p></div>
+        <div class="card"><div><span class="step-num">5</span><strong>QR code permanenti</strong></div><p class="muted">Creazione QR statici, stampa su locandine e tavoli.</p></div>
+        <div class="card"><div><span class="step-num">6</span><strong>Performance & SEO</strong></div><p class="muted">Caching, immagini WebP, dati strutturati e pagine veloci.</p></div>
+        <div class="card"><div><span class="step-num">7</span><strong>Formazione staff</strong></div><p class="muted">Aggiornamenti rapidi di piatti e prezzi in autonomia.</p></div>
+        <div class="card"><div><span class="step-num">8</span><strong>Lancio & assistenza</strong></div><p class="muted">Messa online, supporto e manutenzione programmata.</p></div>
+      </div>
+    </section>
+
+    <section id="vantaggi" aria-labelledby="h-vantaggi">
+      <h2 class="section-title" id="h-vantaggi">Vantaggi per il tuo locale</h2>
+      <div class="features">
+        <div class="card feature-card"><div class="icon">QR</div><h3>QR permanenti</h3><p class="muted">Scansionabili sempre, senza scadenza, pronti per tavoli e locandine.</p></div>
+        <div class="card feature-card"><div class="icon">WP</div><h3>WordPress</h3><p class="muted">Gestisci in autonomia piatti, categorie, prezzi e lingue.</p></div>
+        <div class="card feature-card"><div class="icon">UX</div><h3>Mobile‑first</h3><p class="muted">Menu chiaro, filtri rapidi, sezioni e ancore per scorrere.</p></div>
+        <div class="card feature-card"><div class="icon">AL</div><h3>Allergeni</h3><p class="muted">Icone e note ingredienti per conformità e trasparenza.</p></div>
+        <div class="card feature-card"><div class="icon">ML</div><h3>Multilingua</h3><p class="muted">IT/EN e altre lingue con plugin affidabili, SEO‑ready.</p></div>
+        <div class="card feature-card"><div class="icon">PR</div><h3>Locandine</h3><p class="muted">Template stampabili per drink list e promozioni.</p></div>
+      </div>
+    </section>
+
+    <section id="qr" aria-labelledby="h-qr">
+      <h2 class="section-title" id="h-qr">QR code permanenti</h2>
+      <div class="qr-grid">
+        <div class="card qr-box">
+          <div class="qr" aria-hidden="true"></div>
+          <div>
+            <strong>QR del tuo menu</strong>
+            <p class="muted" style="margin:.25rem 0 0">Statico, sempre attivo. Fornito in PNG e SVG per stampe nitide.</p>
+          </div>
+          <a href="#contatti" class="btn btn-light">Richiedi i tuoi QR</a>
+        </div>
+        <div class="card qr-box">
+          <div class="qr" aria-hidden="true"></div>
+          <div>
+            <strong>Abbinato a locandine</strong>
+            <p class="muted" style="margin:.25rem 0 0">Design coordinato per tavoli, vetrine e menù drink.</p>
+          </div>
+          <a href="#contatti" class="btn">Scarica esempio</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" aria-labelledby="h-port">
+      <h2 class="section-title" id="h-port">Esempi di layout</h2>
+      <div class="cases">
+        <div class="card case"><h3>Menu classico</h3><p class="muted">Sezioni per antipasti, primi, secondi e dolci con filtri rapidi.</p></div>
+        <div class="card case"><h3>Drink list</h3><p class="muted">Cocktail, vini e birre con icone, gradazione e allergeni.</p></div>
+        <div class="card case"><h3>Speciali stagionali</h3><p class="muted">Menù eventi aggiornabili al volo e QR dedicati.</p></div>
+      </div>
+    </section>
+
+    <section id="prezzi" aria-labelledby="h-prezzi">
+      <h2 class="section-title" id="h-prezzi">Pacchetti</h2>
+      <div class="pricing">
+        <div class="card price">
+          <div class="h">Start</div>
+          <ul>
+            <li>Setup WordPress + tema leggero</li>
+            <li>Menu digitale base</li>
+            <li>1 QR permanente (PNG/SVG)</li>
+          </ul>
+          <div style="margin-top:.8rem"><a href="#contatti" class="btn btn-light">Richiedi preventivo</a></div>
+        </div>
+        <div class="card price">
+          <div class="h">Pro</div>
+          <ul>
+            <li>Menu completo + allergeni</li>
+            <li>Multilingua + SEO base</li>
+            <li>3 QR permanenti + locandina</li>
+          </ul>
+          <div style="margin-top:.8rem"><a href="#contatti" class="btn">Parla con noi</a></div>
+        </div>
+        <div class="card price">
+          <div class="h">Plus</div>
+          <ul>
+            <li>Design personalizzato</li>
+            <li>Ottimizzazioni performance</li>
+            <li>Supporto e manutenzione</li>
+          </ul>
+          <div style="margin-top:.8rem"><a href="#contatti" class="btn btn-light">Scopri il piano</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-banner" aria-labelledby="h-cta">
+      <div>
+        <h3 id="h-cta">Vuoi un menu digitale pronto in pochi giorni?</h3>
+        <p class="muted" style="margin:0">Ti mostriamo una demo e ti consegniamo i QR stampabili.</p>
+      </div>
+      <div class="actions">
+        <a href="#contatti" class="btn btn-light">Richiedi demo</a>
+        <a href="#faq" class="btn">Domande frequenti</a>
+      </div>
+    </section>
+
+    <section id="faq" aria-labelledby="h-faq">
+      <h2 class="section-title" id="h-faq">FAQ</h2>
+      <details class="card">
+        <summary>Quanto tempo serve?</summary>
+        <p>In genere 3–7 giorni lavorativi, in base a contenuti e lingue.</p>
+      </details>
+      <details class="card">
+        <summary>I QR scadono?</summary>
+        <p>No: forniamo QR statici permanenti in PNG e SVG ad alta qualità.</p>
+      </details>
+      <details class="card">
+        <summary>Posso aggiornare i prezzi?</summary>
+        <p>Sì, con WordPress aggiorni piatti e prezzi in autonomia in pochi minuti.</p>
+      </details>
+    </section>
+
+    <section id="contatti" class="contact-quick card" aria-labelledby="h-contatti">
+      <div>
+        <h2 class="section-title" id="h-contatti">Parliamo del tuo menu digitale</h2>
+        <p class="muted">Scrivici: ricevi una demo e i prossimi passi entro 24 ore.</p>
+      </div>
+      <div class="info">
+        <span class="label">Email:</span>
+        <a class="email-link"
+           href="mailto:capucciniluca2002@gmail.com?subject=Richiesta%20demo%20menu%20digitale&body=Raccontaci%20il%20tuo%20locale%20e%20le%20esigenze%20del%20menu.">
+          capucciniluca2002@gmail.com
+        </a>
+      </div>
+      <div class="actions">
+        <a class="btn" target="_blank" rel="noopener"
+           href="https://wa.me/+393662883732?text=Ciao%2C%20vorrei%20una%20demo%20del%20menu%20digitale.">
+          WhatsApp
+        </a>
+        <a class="btn btn-light" target="_blank" rel="noopener"
+           href="https://www.instagram.com/lucacapuccinii?igsh=cXJtdWY0YmZ4Mm9u">
+          Instagram
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <a href="#top" class="btn to-top" aria-label="Torna su">↑</a>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Luca & Edo — Menu digitali con WordPress.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle menu mobile
+    const navToggle=document.querySelector('.menu-toggle');
+    const navPanel=document.getElementById('site-links');
+    if(navToggle && navPanel){
+      navToggle.addEventListener('click', ()=>{
+        const open=navPanel.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      navPanel.addEventListener('click',(e)=>{
+        if(e.target.tagName==='A' && navPanel.classList.contains('open')){
+          navPanel.classList.remove('open');
+          navToggle.setAttribute('aria-expanded','false');
+        }
+      });
+      window.addEventListener('resize', ()=>{
+        if(window.innerWidth>860 && navPanel.classList.contains('open')){
+          navPanel.classList.remove('open');
+          navToggle.setAttribute('aria-expanded','false');
+        }
+      }, {passive:true});
+    }
+
+    // Back to top
+    const toTop=document.querySelector('.to-top');
+    const onScroll=()=>{ toTop.classList.toggle('show', window.scrollY>500); };
+    document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+    // Year
+    const yo=document.getElementById('year'); if(yo) yo.textContent=new Date().getFullYear();
+
+    // Dropdown "Servizi offerti"
+    (function(){
+      const dd = document.querySelector('.nav .dropdown');
+      if(!dd) return;
+      const btn = dd.querySelector('.dropbtn');
+
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const isOpen = dd.classList.toggle('open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      document.addEventListener('click', (e)=>{
+        if(!dd.contains(e.target)){
+          dd.classList.remove('open');
+          btn.setAttribute('aria-expanded','false');
+        }
+      });
+
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape'){
+          dd.classList.remove('open');
+          btn.setAttribute('aria-expanded','false');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
