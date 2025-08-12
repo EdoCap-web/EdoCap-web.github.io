@@ -6,6 +6,7 @@
   <title>Come creo eCommerce | Metodo e Processo</title>
   <meta name="description" content="Metodo professionale per eCommerce performanti: strategia, UX/UI, sviluppo, performance, SEO, sicurezza, deploy e crescita." />
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root{
       --c-light:#ECF0F1;
@@ -388,6 +389,57 @@
     @media (max-width:600px){
       .hero{padding-block:32px}
     }
+
+    /* Contatti: grid di card cliccabili (come DigitalMenu) */
+    .contact-grid{
+      display:grid; gap:12px;
+      grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+      margin-top:12px;
+    }
+    .contact-card{
+      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
+      padding:14px 16px; border:1.5px solid rgba(0,0,0,.12);
+      border-radius:var(--radius-sm); background:#fff; box-shadow:var(--shadow-sm);
+      color:inherit; text-decoration:none; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .contact-card:hover{ transform:translateY(-2px); box-shadow:var(--shadow); border-color:rgba(0,0,0,.18) }
+
+    .brand-badge{
+      width:42px; height:42px; border-radius:12px; display:grid; place-items:center; color:#fff; font-size:1.1rem; font-weight:800
+    }
+    .contact-meta{display:flex; flex-direction:column; line-height:1.2}
+    .contact-meta strong{font-weight:800}
+    .contact-meta span{font-size:.92rem; opacity:.85}
+    .contact-cta{font-weight:700; font-size:.9rem; opacity:.9}
+
+    /* Varianti brand */
+    .contact-card.email .brand-badge{ background:var(--c-primary) }
+    .contact-card.phone .brand-badge{ background:var(--c-accent) }
+    .contact-card.whatsapp .brand-badge{ background:#25D366 }
+    .contact-card.instagram .brand-badge{
+      background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF,#515BD4);
+    }
+
+    /* Identico a DigitalMenu: nascondi frase a destra e centra tutto */
+    .contact-card .contact-cta{ display:none !important; }
+    .contact-card{ grid-template-columns:1fr !important; justify-items:center; text-align:center; }
+    .contact-card .brand-badge{ margin:0 auto }
+    .contact-card .contact-meta{ align-items:center }
+
+    @media (max-width:700px){
+      .contact-grid{grid-template-columns:1fr}
+    }
+
+    .contact-grid .section-title{
+      grid-column:1 / -1;
+      text-align:left;
+      margin:0 0 8px;
+    }
+
+    /* filepath: c:\Users\capuc\Desktop\EdoCap-web.github.io\Ecommerce.html */
+    .toc{ display:none !important; }      /* nasconde l’indice */
+    .grid{ display:block; }               /* ritorna layout standard */
+    .col-8, .col-4{ grid-column:auto; }   /* neutralizza le colonne */
   </style>
 </head>
 <body>
@@ -429,8 +481,8 @@
         Design orientato alla conversione, SEO tecnica e performance al top con WordPress/WooCommerce.
         </p>
         <div class="hero-cta">
-        <a class="btn" href="#processo">Scopri il metodo</a>
-        <a class="btn-light btn" href="#contatti">Prenota una consulenza gratuita</a>
+        <a class="btn" href="#processo">Scopri il piano</a>
+        <a class="btn-light btn" href="#contactecommerce">Contattaci</a>
         </div>
         <div class="hero-cta" style="margin-top:.6rem">
         <span class="chip">Tempi medi: 2–6 settimane</span>
@@ -450,21 +502,7 @@
     </section>
 
   <main id="contenuto" class="container">
-    <div class="grid">
-      <aside class="col-4">
-        <nav class="toc" aria-label="Indice">
-          <h3>Indice</h3>
-          <a href="#processo">Processo di Sviluppo Completo</a>
-          <div class="caption">Approfondimenti</div>
-          <a href="#perche-noi">Perché scegliere noi</a>
-          <a href="#recensioni">Testimonianze</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contatti">Contatti</a>
-        </nav>
-      </aside>
-
-      <div class="col-8">
-        <section id="processo" aria-labelledby="h-processo">
+  <section id="processo" aria-labelledby="h-processo">
           <h2 class="section-title" id="h-processo">1) Processo in 10 fasi</h2>
           <div class="steps">
             <div class="card" id="s1-analisi">
@@ -557,7 +595,7 @@
             <p class="muted" style="margin:0">Parliamo del progetto e definiamo una roadmap in 48h.</p>
           </div>
           <div class="actions">
-            <a href="#contatti" class="btn btn-light">Richiedi preventivo</a>
+            <a href="#contactecommerce" class="btn btn-light">Richiedi preventivo</a>
             <a href="#faq" class="btn">Domande frequenti</a>
           </div>
         </section>
@@ -578,32 +616,58 @@
           </details>
         </section>
 
-       <!-- Contatti rapidi -->
-        <section class="contact-quick card" aria-labelledby="h-preventivo">
-          <div>
-            <h3 id="h-preventivo">Richiedi un preventivo</h3>
-            <p class="muted">Mandaci un'email per un preventivo personalizzato oppure scrivici su WhatsApp o Instagram.</p>
-          </div>
-          <div class="info">
-            <span class="label">Email:</span>
-            <a class="email-link"
-               href="mailto:capucciniluca2002@gmail.com?subject=Richiesta%20preventivo%20eCommerce&body=Scrivi%20qui%20le%20tue%20esigenze%20e%20tempistiche."
-               aria-label="Invia una email a capucciniluca2002@gmail.com">
-              capucciniluca2002@gmail.com
-            </a>
-            <button class="btn btn-light btn-copy" type="button" data-email="capucciniluca2002@gmail.com">Copia</button>
-          </div>
-          <div class="actions">
-            <a class="btn" target="_blank" rel="noopener"
-               href="https://wa.me/+393662883732?text=Ciao%2C%20vorrei%20informazioni%20sul%20servizio%20eCommerce.">
-              WhatsApp
-            </a>
-            <a class="btn btn-light" target="_blank" rel="noopener"
-               href="https://www.instagram.com/lucacapuccinii?igsh=cXJtdWY0YmZ4Mm9u">
-              Instagram
-            </a>
-          </div>
-        </section>
+        
+        <section id="contactecommerce" class="contact-quick card" aria-labelledby="h-contatti">
+  <div>
+    <h2 class="section-title" id="h-contatti">Contatti</h2>
+  </div>
+
+  <div class="contact-grid">
+    <a class="contact-card email"
+       href="mailto:capucciniluca2002@gmail.com?subject=Richiesta%20preventivo%20eCommerce&body=Scrivi%20qui%20le%20tue%20esigenze%20e%20tempistiche."
+       aria-label="Invia una email">
+      <span class="brand-badge"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
+      <div class="contact-meta">
+        <strong>Email</strong>
+        <span>capucciniluca2002@gmail.com</span>
+      </div>
+      <span class="contact-cta">Scrivi</span>
+    </a>
+
+    <a class="contact-card phone" href="tel:+393662883732" aria-label="Chiama il numero">
+      <span class="brand-badge"><i class="fa-solid fa-phone" aria-hidden="true"></i></span>
+      <div class="contact-meta">
+        <strong>Telefono</strong>
+        <span>+39 366 288 3732</span>
+      </div>
+      <span class="contact-cta">Chiama</span>
+    </a>
+
+    <a class="contact-card whatsapp" target="_blank" rel="noopener"
+       href="https://wa.me/+393662883732?text=Ciao%2C%20vorrei%20informazioni%20sul%20servizio%20eCommerce."
+       aria-label="Scrivimi su WhatsApp">
+      <span class="brand-badge"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></span>
+      <div class="contact-meta">
+        <strong>WhatsApp</strong>
+        <span>Risposta entro 24h</span>
+      </div>
+      <span class="contact-cta">Apri chat</span>
+    </a>
+
+    <a class="contact-card instagram" target="_blank" rel="noopener"
+       href="https://www.instagram.com/lucacapuccinii?igsh=cXJtdWY0YmZ4Mm9u"
+       aria-label="Visita il profilo Instagram">
+      <span class="brand-badge"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span>
+      <div class="contact-meta">
+        <strong>Instagram</strong>
+        <span>@lucacapuccinii</span>
+      </div>
+      <span class="contact-cta">Profilo</span>
+    </a>
+  </div>
+</section>
+
+        
 
 
       </div>
@@ -614,26 +678,16 @@
 
   <footer>
     <div class="container">
-      <p>&copy; <span id="year"></span> Ecommerce Studio — HTML, CSS & JS.</p>
+      <p>&copy; <span id="year"></span>Luca & Edo</p>
     </div>
   </footer>
 
   <script>
-    // TOC attivo + bottone "torna su"
-    const links=[...document.querySelectorAll('.toc a')];
-    const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    // Solo "torna su" (TOC rimosso)
     const toTop=document.querySelector('.to-top');
-    const yo=document.getElementById('year'); if(yo) yo.textContent=new Date().getFullYear();
-
-    const onScroll=()=>{
-      const y=window.scrollY+120;
-      let current=null;
-      for(const s of sections){ if(s && s.offsetTop<=y) current=s.id; }
-      links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+current));
-      toTop.classList.toggle('show', window.scrollY>500);
-    };
-    document.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
+    document.addEventListener('scroll', ()=>{
+      toTop.classList.toggle('show', window.scrollY > 500);
+    }, {passive:true});
 
     // Form lead -> mailto
     const form=document.getElementById('lead-form');

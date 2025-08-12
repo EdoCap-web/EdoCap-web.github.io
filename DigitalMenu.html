@@ -6,6 +6,7 @@
   <title>Menu Digitali con QR Code | WordPress per Ristoranti</title>
   <meta name="description" content="Siti WordPress per ristoranti e locali: menu digitali sempre aggiornati, QR code permanenti, locandine drink e gestione allergeni.">
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     /* Palette */
     :root{
@@ -163,6 +164,44 @@
       .contact-quick .actions .btn{width:100%}
     }
 
+    /* Contatti: grid di card cliccabili */
+    .contact-grid{
+      display:grid; gap:12px;
+      grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+      margin-top:12px;
+    }
+    .contact-card{
+      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
+      padding:14px 16px; border:1.5px solid rgba(0,0,0,.12);
+      border-radius:var(--radius-sm); background:#fff; box-shadow:var(--shadow-sm);
+      color:inherit; text-decoration:none; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .contact-card:hover{ transform:translateY(-2px); box-shadow:var(--shadow); border-color:rgba(0,0,0,.18) }
+
+    .brand-badge{
+      width:42px; height:42px; border-radius:12px; display:grid; place-items:center; color:#fff; font-size:1.1rem; font-weight:800
+    }
+    .contact-meta{display:flex; flex-direction:column; line-height:1.2}
+    .contact-meta strong{font-weight:800}
+    .contact-meta span{font-size:.92rem; opacity:.85}
+    .contact-cta{font-weight:700; font-size:.9rem; opacity:.9}
+
+    /* Varianti brand */
+    .contact-card.email .brand-badge{ background:var(--c-primary) }
+    .contact-card.phone .brand-badge{ background:var(--c-accent) }
+    .contact-card.whatsapp .brand-badge{ background:#25D366 }
+    .contact-card.instagram .brand-badge{
+      background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF,#515BD4);
+    }
+
+    /* Mobile centrato */
+    @media (max-width:700px){
+      .contact-grid{grid-template-columns:1fr}
+      .contact-card{grid-template-columns:1fr; text-align:center}
+      .brand-badge{margin:0 auto}
+      .contact-cta{display:none}
+    }
+
     /* Footer */
     footer{
       margin:34px 0 0; padding:28px 0 44px; text-align:center;
@@ -187,7 +226,9 @@
       background:var(--c-primary); transform:scaleX(0); transform-origin:left; transition:transform .25s ease;
     }
     .nav-links a:hover{opacity:1}
-    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-links a:hover::after{transform:scaleX(0) !important;}
+    .nav-links a:active::after{transform:scaleX(0) !important;}
+    .nav-links li:hover > a::after{transform:scaleX(0) !important;}
     .nav-links a:focus{outline:none}
     .nav-links a:focus-visible::after{transform:scaleX(1)}
 
@@ -213,6 +254,8 @@
     .nav .dropdown-menu li{ list-style:none }
     .nav .dropdown.open > .dropdown-menu{display:block}
     .nav .dropdown-menu a{display:block; padding:.55rem .9rem; text-decoration:none}
+    .nav .dropdown-menu a:hover{ text-decoration:none; }
+
 
     /* Mobile panel */
     @media (max-width: 860px){
@@ -229,6 +272,84 @@
         position:static; border:none; box-shadow:none; padding:0 0 .3rem;
       }
       .nav .dropdown-menu a{padding:.55rem 1rem}
+    }
+
+    /* Hero CTA — bottoni stilosi */
+    .hero-cta{display:flex; gap:.8rem; flex-wrap:wrap; align-items:center}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+      padding:.95rem 1.25rem; border-radius:999px; font-weight:800; letter-spacing:.2px;
+      border:2px solid var(--c-primary);
+      background:linear-gradient(135deg, var(--c-primary) 0%, var(--c-accent) 100%);
+      color:#fff;
+      box-shadow:0 10px 18px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.06);
+      transition:transform .15s ease, box-shadow .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 14px 26px rgba(0,0,0,.12), 0 4px 10px rgba(0,0,0,.08);
+    }
+    .btn:active{transform:translateY(0); box-shadow:0 8px 14px rgba(0,0,0,.1), 0 2px 6px rgba(0,0,0,.08)}
+    .btn:focus{outline:none}
+    .btn:focus-visible{box-shadow:0 0 0 4px rgba(248,156,84,.35), 0 10px 18px rgba(0,0,0,.08)}
+
+    .btn-light{
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+      padding:.95rem 1.25rem; border-radius:999px; font-weight:800; letter-spacing:.2px;
+      background:#fff; color:var(--c-dark);
+      border:2px solid var(--c-accent);
+      box-shadow:0 6px 16px rgba(0,0,0,.06);
+    }
+    .btn-light:hover{
+      color:var(--c-accent);
+      transform:translateY(-1px);
+      box-shadow:0 10px 22px rgba(0,0,0,.1);
+    }
+    .btn-light:active{transform:translateY(0)}
+    .btn-light:focus{outline:none}
+    .btn-light:focus-visible{box-shadow:0 0 0 4px rgba(255,60,4,.25), 0 6px 16px rgba(0,0,0,.06)}
+
+    @media (max-width:600px){
+      .hero-cta .btn, .hero-cta .btn-light{width:100%}
+    }
+    .hero-cta .btn,
+    .hero-cta .btn-light{ text-decoration:none }
+    .hero-cta .btn:hover,
+    .hero-cta .btn-light:hover{ text-decoration:none }
+    .hero-cta .btn:focus,
+    .hero-cta .btn-light:focus{ text-decoration:none }
+
+    /* Contatti: niente underline su hover/focus delle card */
+    .contact-card,
+    .contact-card:hover,
+    .contact-card:focus,
+    .contact-card:active{
+      text-decoration: none !important;
+    }
+
+    .contact-grid .section-title{
+      grid-column: 1 / -1;
+      text-align: left;
+      margin: 0 0 .6rem;
+    }
+
+    /* Contatti: le card riempiono le colonne e si estendono in altezza */
+    #contatti-cards.contact-grid{
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: stretch;           /* le celle hanno la stessa altezza per riga */
+    }
+    #contatti-cards .contact-card{
+      width: 100%;
+      height: 100%;                   /* la card riempie la cella */
+      align-self: stretch;
+    }
+
+    /* Su schermi molto larghi, 4 colonne piene senza spazi */
+    @media (min-width: 1200px){
+      #contatti-cards.contact-grid{
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
   </style>
 </head>
@@ -262,17 +383,11 @@
     <div class="hero-inner">
       <h1 id="h-hero">Menu digitali con QR code permanenti</h1>
       <p>
-        Realizziamo con WordPress menu digitali per ristoranti e locali: aggiornabili in autonomia,
-        veloci da consultare, con QR code permanenti e locandine drink coordinate.
+        Progettiamo e sviluppiamo menu digitali completi e drink list per ristoranti, bar e locali: aggiornabili in autonomia in pochi clic, rapidissimi da consultare su smartphone, con design moderno e totalmente personalizzabile. Forniamo QR code permanenti (PNG/SVG ad alta qualità) pronti per la stampa, gestione allergeni e varianti, multilingua e SEO, oltre a locandine e materiali coordinati per tavoli, vetrine e promozioni.
       </p>
       <div class="hero-cta">
-        <a class="btn" href="#processo">Scopri il flusso</a>
-        <a class="btn-light btn" href="#contatti">Richiedi una demo</a>
-      </div>
-      <div class="hero-cta" style="margin-top:.6rem">
-        <span class="chip">WordPress + plugin affidabili</span>
-        <span class="chip">Aggiornamenti in 1 click</span>
-        <span class="chip">Allergeni e multilingua</span>
+        <a class="btn" href="#processo">Contattaci</a>
+        <a class="btn-light btn" href="#contatti">Esempi di Layout</a>
       </div>
     </div>
 
@@ -325,7 +440,6 @@
             <strong>QR del tuo menu</strong>
             <p class="muted" style="margin:.25rem 0 0">Statico, sempre attivo. Fornito in PNG e SVG per stampe nitide.</p>
           </div>
-          <a href="#contatti" class="btn btn-light">Richiedi i tuoi QR</a>
         </div>
         <div class="card qr-box">
           <div class="qr" aria-hidden="true"></div>
@@ -333,7 +447,6 @@
             <strong>Abbinato a locandine</strong>
             <p class="muted" style="margin:.25rem 0 0">Design coordinato per tavoli, vetrine e menù drink.</p>
           </div>
-          <a href="#contatti" class="btn">Scarica esempio</a>
         </div>
       </div>
     </section>
@@ -347,43 +460,12 @@
       </div>
     </section>
 
-    <section id="prezzi" aria-labelledby="h-prezzi">
-      <h2 class="section-title" id="h-prezzi">Pacchetti</h2>
-      <div class="pricing">
-        <div class="card price">
-          <div class="h">Start</div>
-          <ul>
-            <li>Setup WordPress + tema leggero</li>
-            <li>Menu digitale base</li>
-            <li>1 QR permanente (PNG/SVG)</li>
-          </ul>
-          <div style="margin-top:.8rem"><a href="#contatti" class="btn btn-light">Richiedi preventivo</a></div>
-        </div>
-        <div class="card price">
-          <div class="h">Pro</div>
-          <ul>
-            <li>Menu completo + allergeni</li>
-            <li>Multilingua + SEO base</li>
-            <li>3 QR permanenti + locandina</li>
-          </ul>
-          <div style="margin-top:.8rem"><a href="#contatti" class="btn">Parla con noi</a></div>
-        </div>
-        <div class="card price">
-          <div class="h">Plus</div>
-          <ul>
-            <li>Design personalizzato</li>
-            <li>Ottimizzazioni performance</li>
-            <li>Supporto e manutenzione</li>
-          </ul>
-          <div style="margin-top:.8rem"><a href="#contatti" class="btn btn-light">Scopri il piano</a></div>
-        </div>
-      </div>
-    </section>
+    
 
     <section class="cta-banner" aria-labelledby="h-cta">
       <div>
         <h3 id="h-cta">Vuoi un menu digitale pronto in pochi giorni?</h3>
-        <p class="muted" style="margin:0">Ti mostriamo una demo e ti consegniamo i QR stampabili.</p>
+        <p class="muted" style="margin:0">Contattaci e troveremo la soluzione più adatta per te e la tua attività</p>
       </div>
       <div class="actions">
         <a href="#contatti" class="btn btn-light">Richiedi demo</a>
@@ -407,28 +489,35 @@
       </details>
     </section>
 
-    <section id="contatti" class="contact-quick card" aria-labelledby="h-contatti">
-      <div>
-        <h2 class="section-title" id="h-contatti">Parliamo del tuo menu digitale</h2>
-        <p class="muted">Scrivici: ricevi una demo e i prossimi passi entro 24 ore.</p>
-      </div>
-      <div class="info">
-        <span class="label">Email:</span>
-        <a class="email-link"
-           href="mailto:capucciniluca2002@gmail.com?subject=Richiesta%20demo%20menu%20digitale&body=Raccontaci%20il%20tuo%20locale%20e%20le%20esigenze%20del%20menu.">
-          capucciniluca2002@gmail.com
-        </a>
-      </div>
-      <div class="actions">
-        <a class="btn" target="_blank" rel="noopener"
-           href="https://wa.me/+393662883732?text=Ciao%2C%20vorrei%20una%20demo%20del%20menu%20digitale.">
-          WhatsApp
-        </a>
-        <a class="btn btn-light" target="_blank" rel="noopener"
-           href="https://www.instagram.com/lucacapuccinii?igsh=cXJtdWY0YmZ4Mm9u">
-          Instagram
-        </a>
-      </div>
+
+    <section class="contact-grid" id="contatti-cards" aria-labelledby="h-contatti-cards">
+      <h2 class="section-title" id="h-contatti-cards">Contatti</h2>
+      <a class="contact-card email" href="mailto:capucciniluca2002@gmail.com?subject=Richiesta%20demo%20menu%20digitale&body=Raccontaci%20il%20tuo%20locale%20e%20le%20esigenze%20del%20menu.">
+        <div class="brand-badge"><i class="fas fa-envelope"></i></div>
+        <div class="contact-meta">
+          <strong>Email</strong>
+          <span>capucciniluca2002@gmail.com</span>
+        </div>
+      </a>
+      <a class="contact-card phone" href="tel:+393662883732">
+        <div class="brand-badge"><i class="fas fa-phone"></i></div>
+        <div class="contact-meta">
+          <strong>Telefono</strong>
+          <span>+39 366 288 3732</span>
+        </div>
+      </a>
+      <a class="contact-card whatsapp" target="_blank" rel="noopener" href="https://wa.me/+393662883732?text=Ciao%2C%20vorrei%20una%20demo%20del%20menu%20digitale.">
+        <div class="brand-badge"><i class="fab fa-whatsapp"></i></div>
+        <div class="contact-meta">
+          <strong>WhatsApp</strong>
+        </div>
+      </a>
+      <a class="contact-card instagram" target="_blank" rel="noopener" href="https://www.instagram.com/lucacapuccinii?igsh=cXJtdWY0YmZ4Mm9u">
+        <div class="brand-badge"><i class="fab fa-instagram"></i></div>
+        <div class="contact-meta">
+          <strong>Instagram</strong>
+        </div>
+      </a>
     </section>
   </main>
 
@@ -436,7 +525,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; <span id="year"></span> Luca & Edo — Menu digitali con WordPress.</p>
+      <p>&copy; <span id="year"></span>Luca & Edo</p>
     </div>
   </footer>
 
