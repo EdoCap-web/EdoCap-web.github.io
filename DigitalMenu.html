@@ -351,6 +351,55 @@
         grid-template-columns: repeat(4, 1fr);
       }
     }
+
+    /* Vantaggi - lista con check */
+    .list-check{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+    .list-check li{display:flex; align-items:flex-start; gap:10px; line-height:1.5}
+    .list-check .ico{
+      flex:0 0 28px; width:28px; height:28px; border-radius:50%;
+      background:var(--c-primary); color:#fff; display:grid; place-items:center;
+      font-size:.9rem; margin-top:2px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    /* Mobile: spazio maggiore tra gli elementi */
+    @media (max-width:700px){
+      .list-check{gap:12px}
+    }
+
+    /* Vantaggi: griglia di card */
+    .benefits-grid{
+      display:grid; gap:14px;
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .benefit-card{
+      display:grid; grid-template-columns:auto 1fr; align-items:center; gap:12px;
+      padding:16px; border:1.5px solid rgba(0,0,0,.12);
+      border-radius:var(--radius-sm);
+      background:linear-gradient(180deg,#fff,#f7f9fa);
+      box-shadow:var(--shadow-sm);
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .benefit-card:hover{
+      transform:translateY(-2px);
+      box-shadow:var(--shadow);
+      border-color:rgba(0,0,0,.18);
+    }
+    .benefit-icon{
+      width:42px; height:42px; border-radius:12px;
+      display:grid; place-items:center; color:#fff; font-size:1.05rem; font-weight:800;
+      background:linear-gradient(135deg, var(--c-primary), var(--c-accent));
+      box-shadow:0 6px 16px rgba(0,0,0,.06);
+    }
+    .benefit-title{
+      margin:0; font-size:1rem; line-height:1.35; font-weight:800; letter-spacing:.2px;
+    }
+
+    /* Mobile: centra contenuti */
+    @media (max-width:700px){
+      .benefit-card{ grid-template-columns:1fr; text-align:center }
+      .benefit-icon{ margin:0 auto }
+    }
   </style>
 </head>
 <body>
@@ -406,28 +455,68 @@
 
   <main class="container">
     <section id="processo" aria-labelledby="h-proc">
-      <h2 class="section-title" id="h-proc">Processo in 8 passi</h2>
+      <h2 class="section-title" id="h-proc">Processo in 7 fasi</h2>
       <div class="steps">
-        <div class="card"><div><span class="step-num">1</span><strong>Brief & analisi</strong></div><p class="muted">Menu, categorie, allergeni, branding e bisogni del locale.</p></div>
-        <div class="card"><div><span class="step-num">2</span><strong>Setup WordPress</strong></div><p class="muted">Installazione sicura, tema leggero e plugin essenziali.</p></div>
-        <div class="card"><div><span class="step-num">3</span><strong>Design del menu</strong></div><p class="muted">Struttura chiara per antipasti, primi, secondi, drink e menù bimbi.</p></div>
-        <div class="card"><div><span class="step-num">4</span><strong>Contenuti e allergeni</strong></div><p class="muted">Piatti, varianti, prezzi, icone allergeni e traduzioni.</p></div>
-        <div class="card"><div><span class="step-num">5</span><strong>QR code permanenti</strong></div><p class="muted">Creazione QR statici, stampa su locandine e tavoli.</p></div>
-        <div class="card"><div><span class="step-num">6</span><strong>Performance & SEO</strong></div><p class="muted">Caching, immagini WebP, dati strutturati e pagine veloci.</p></div>
-        <div class="card"><div><span class="step-num">7</span><strong>Formazione staff</strong></div><p class="muted">Aggiornamenti rapidi di piatti e prezzi in autonomia.</p></div>
-        <div class="card"><div><span class="step-num">8</span><strong>Lancio & assistenza</strong></div><p class="muted">Messa online, supporto e manutenzione programmata.</p></div>
+        <div class="card">
+          <div><span class="step-num">1</span><strong>Analisi delle esigenze</strong></div>
+          <p class="muted">Il processo inizia con un confronto diretto con il cliente per comprendere lo stile del locale, la palette di colori, le immagini e l’atmosfera da trasmettere.</p>
+        </div>
+        <div class="card">
+          <div><span class="step-num">2</span><strong>Dominio web dedicato</strong></div>
+          <p class="muted">Creiamo un dominio personalizzato per il ristorante o il locale, così da rendere il menù digitale facilmente accessibile e memorabile per i clienti.</p>
+        </div>
+        <div class="card">
+          <div><span class="step-num">3</span><strong>Progettazione grafica su WordPress</strong></div>
+          <p class="muted">Su WordPress sviluppiamo una pagina personalizzata che ospita il menù digitale o la locandina, ottimizzata per una navigazione fluida su smartphone e tablet.</p>
+        </div>
+        <div class="card">
+          <div><span class="step-num">4</span><strong>Generazione del QR Code permanente</strong></div>
+          <p class="muted">Grazie a uno script Python proprietario, generiamo un QR Code unico e permanente:</p>
+        </div>
+        <div class="card">
+          <div><span class="step-num">5</span><strong>Ottimizzazione SEO e sponsorizzazione</strong></div>
+          <p class="muted">Ottimizziamo il sito per i motori di ricerca per aumentare la visibilità online. Su richiesta, attiviamo campagne pubblicitarie mirate per promuovere il ristorante.</p>
+        </div>
+        <div class="card">
+          <div><span class="step-num">6</span><strong>Lancio e assistenza attiva</strong></div>
+          <p class="muted">Messa online e accesso immediato via QR Code. Segue un periodo di assistenza con supporto tecnico, aggiornamenti rapidi e ottimizzazioni continue.</p>
+        </div>
       </div>
     </section>
 
     <section id="vantaggi" aria-labelledby="h-vantaggi">
-      <h2 class="section-title" id="h-vantaggi">Vantaggi per il tuo locale</h2>
-      <div class="features">
-        <div class="card feature-card"><div class="icon">QR</div><h3>QR permanenti</h3><p class="muted">Scansionabili sempre, senza scadenza, pronti per tavoli e locandine.</p></div>
-        <div class="card feature-card"><div class="icon">WP</div><h3>WordPress</h3><p class="muted">Gestisci in autonomia piatti, categorie, prezzi e lingue.</p></div>
-        <div class="card feature-card"><div class="icon">UX</div><h3>Mobile‑first</h3><p class="muted">Menu chiaro, filtri rapidi, sezioni e ancore per scorrere.</p></div>
-        <div class="card feature-card"><div class="icon">AL</div><h3>Allergeni</h3><p class="muted">Icone e note ingredienti per conformità e trasparenza.</p></div>
-        <div class="card feature-card"><div class="icon">ML</div><h3>Multilingua</h3><p class="muted">IT/EN e altre lingue con plugin affidabili, SEO‑ready.</p></div>
-        <div class="card feature-card"><div class="icon">PR</div><h3>Locandine</h3><p class="muted">Template stampabili per drink list e promozioni.</p></div>
+      <h2 class="section-title" id="h-vantaggi">Vantaggi per il cliente</h2>
+
+      <div class="benefits-grid" role="list">
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
+          <h3 class="benefit-title">Dominio web personalizzato e facilmente ricordabile</h3>
+        </article>
+
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon"><i class="fa-solid fa-qrcode" aria-hidden="true"></i></div>
+          <h3 class="benefit-title">QR Code permanente, senza necessità di ristampa</h3>
+        </article>
+
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i></div>
+          <h3 class="benefit-title">Menù sempre aggiornato e ottimizzato per smartphone</h3>
+        </article>
+
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></div>
+          <h3 class="benefit-title">Immagine moderna e professionale del locale</h3>
+        </article>
+
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
+          <h3 class="benefit-title">Maggiore visibilità online (SEO e sponsorizzazioni)</h3>
+        </article>
+
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon"><i class="fa-solid fa-headset" aria-hidden="true"></i></div>
+          <h3 class="benefit-title">Supporto e assistenza garantiti anche dopo il lancio</h3>
+        </article>
       </div>
     </section>
 
@@ -449,18 +538,7 @@
           </div>
         </div>
       </div>
-    </section>
-
-    <section id="portfolio" aria-labelledby="h-port">
-      <h2 class="section-title" id="h-port">Esempi di layout</h2>
-      <div class="cases">
-        <div class="card case"><h3>Menu classico</h3><p class="muted">Sezioni per antipasti, primi, secondi e dolci con filtri rapidi.</p></div>
-        <div class="card case"><h3>Drink list</h3><p class="muted">Cocktail, vini e birre con icone, gradazione e allergeni.</p></div>
-        <div class="card case"><h3>Speciali stagionali</h3><p class="muted">Menù eventi aggiornabili al volo e QR dedicati.</p></div>
-      </div>
-    </section>
-
-    
+    </section>    
 
     <section class="cta-banner" aria-labelledby="h-cta">
       <div>
